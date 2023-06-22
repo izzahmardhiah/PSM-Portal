@@ -1,0 +1,34 @@
+﻿@model psmportal.Models.tb_sv
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tb_sv</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.OwnedStudentIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OwnedStudentIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_lecturer.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_lecturer.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.SupervisorIC }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

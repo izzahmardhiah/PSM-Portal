@@ -1,0 +1,98 @@
+﻿@model psmportal.Models.tb_student
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tb_student</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.MatricNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MatricNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Email)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Email)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MobileNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MobileNo)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AcademicSession)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AcademicSession)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Agreement)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Agreement)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_domain.DomainName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_domain.DomainName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_program.ProgramName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_program.ProgramName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_proposal.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_proposal.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_sv.OwnedStudentIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_sv.OwnedStudentIC)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IC }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

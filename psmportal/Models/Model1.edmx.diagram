@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b28909d58b434b5791a234068d9df0ef" Name="Diagram1">
+        <EntityTypeShape EntityType="db_psmportalModel.sysdiagram" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_psmportalModel.tb_domain" Width="1.5" PointX="0.75" PointY="5.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_psmportalModel.tb_evaluation" Width="1.5" PointX="9.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_psmportalModel.tb_evaluator" Width="1.5" PointX="5.25" PointY="4" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_psmportalModel.tb_lecturer" Width="1.5" PointX="3" PointY="4.875" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_psmportalModel.tb_program" Width="1.5" PointX="0.75" PointY="2.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_psmportalModel.tb_proposal" Width="1.5" PointX="7.5" PointY="7.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_psmportalModel.tb_status" Width="1.5" PointX="7.5" PointY="4.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_psmportalModel.tb_student" Width="1.5" PointX="12.75" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="db_psmportalModel.tb_sv" Width="1.5" PointX="5.25" PointY="7.5" IsExpanded="true" />
+        <AssociationConnector Association="db_psmportalModel.FK_tb_lecturer_tb_domain" ManuallyRouted="false" />
+        <AssociationConnector Association="db_psmportalModel.FK_tb_student_tb_domain" ManuallyRouted="false" />
+        <AssociationConnector Association="db_psmportalModel.FK_tb_evaluation_tb_evaluator" ManuallyRouted="false" />
+        <AssociationConnector Association="db_psmportalModel.FK_tb_evaluation_tb_proposal" ManuallyRouted="false" />
+        <AssociationConnector Association="db_psmportalModel.FK_tb_evaluation_tb_status" ManuallyRouted="false" />
+        <AssociationConnector Association="db_psmportalModel.FK_tb_evaluator_tb_lecturer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_psmportalModel.FK_tb_proposal_tb_evaluator" ManuallyRouted="false" />
+        <AssociationConnector Association="db_psmportalModel.FK_tb_proposal_tb_evaluator1" ManuallyRouted="false" />
+        <AssociationConnector Association="db_psmportalModel.FK_tb_lecturer_tb_program" ManuallyRouted="false" />
+        <AssociationConnector Association="db_psmportalModel.FK_tb_sv_tb_lecturer" ManuallyRouted="false" />
+        <AssociationConnector Association="db_psmportalModel.FK_tb_student_tb_program" ManuallyRouted="false" />
+        <AssociationConnector Association="db_psmportalModel.FK_tb_student_tb_proposal" ManuallyRouted="false" />
+        <AssociationConnector Association="db_psmportalModel.FK_tb_student_tb_sv" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

@@ -1,0 +1,823 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="db_psmportalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="sysdiagrams">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="nvarchar" MaxLength="128" Nullable="false" />
+          <Property Name="principal_id" Type="int" Nullable="false" />
+          <Property Name="diagram_id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="version" Type="int" />
+          <Property Name="definition" Type="varbinary(max)" />
+        </EntityType>
+        <EntityType Name="tb_domain">
+          <Key>
+            <PropertyRef Name="DomainID" />
+          </Key>
+          <Property Name="DomainID" Type="int" Nullable="false" />
+          <Property Name="DomainName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_evaluation">
+          <Key>
+            <PropertyRef Name="EvaluationID" />
+          </Key>
+          <Property Name="EvaluationID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="EvaluatorIC" Type="varchar" MaxLength="50" />
+          <Property Name="StudentIC" Type="varchar" MaxLength="50" />
+          <Property Name="ProposalID" Type="varchar" MaxLength="50" />
+          <Property Name="EvaluationComment" Type="text" />
+          <Property Name="EvaluationMarks" Type="int" />
+          <Property Name="EvaluationStatus" Type="int" />
+        </EntityType>
+        <EntityType Name="tb_evaluator">
+          <Key>
+            <PropertyRef Name="EvaluatorIC" />
+            <PropertyRef Name="OwnedStudentIC" />
+          </Key>
+          <Property Name="EvaluatorIC" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OwnedStudentIC" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_lecturer">
+          <Key>
+            <PropertyRef Name="IC" />
+          </Key>
+          <Property Name="IC" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProgramCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Domain" Type="int" />
+          <Property Name="Email" Type="varchar" MaxLength="50" />
+          <Property Name="MobileNo" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_program">
+          <Key>
+            <PropertyRef Name="ProgramID" />
+          </Key>
+          <Property Name="ProgramID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProgramName" Type="varchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_proposal">
+          <Key>
+            <PropertyRef Name="ProposalID" />
+          </Key>
+          <Property Name="ProposalID" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Title" Type="varchar(max)" Nullable="false" />
+          <Property Name="ProposalDoc" Type="varbinary(max)" />
+          <Property Name="DateUploaded" Type="datetime" />
+          <Property Name="Notes" Type="text" />
+          <Property Name="Evaluator1" Type="varchar" MaxLength="50" />
+          <Property Name="Evaluator2" Type="varchar" MaxLength="50" />
+          <Property Name="StudentIC" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_status">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="int" Nullable="false" />
+          <Property Name="StatusName" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_student">
+          <Key>
+            <PropertyRef Name="IC" />
+          </Key>
+          <Property Name="IC" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MatricNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="ProgramCode" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Email" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MobileNo" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="AcademicSession" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Supervisor" Type="varchar" MaxLength="50" />
+          <Property Name="Agreement" Type="varbinary(max)" />
+          <Property Name="Domain" Type="int" />
+          <Property Name="ProposalID" Type="varchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="tb_sv">
+          <Key>
+            <PropertyRef Name="SupervisorIC" />
+          </Key>
+          <Property Name="SupervisorIC" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="OwnedStudentIC" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_tb_evaluation_tb_evaluator">
+          <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="0..1" />
+          <End Role="tb_evaluation" Type="Self.tb_evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_evaluator">
+              <PropertyRef Name="EvaluatorIC" />
+              <PropertyRef Name="OwnedStudentIC" />
+            </Principal>
+            <Dependent Role="tb_evaluation">
+              <PropertyRef Name="EvaluatorIC" />
+              <PropertyRef Name="StudentIC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_evaluation_tb_proposal">
+          <End Role="tb_proposal" Type="Self.tb_proposal" Multiplicity="0..1" />
+          <End Role="tb_evaluation" Type="Self.tb_evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_proposal">
+              <PropertyRef Name="ProposalID" />
+            </Principal>
+            <Dependent Role="tb_evaluation">
+              <PropertyRef Name="ProposalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_evaluation_tb_status">
+          <End Role="tb_status" Type="Self.tb_status" Multiplicity="0..1" />
+          <End Role="tb_evaluation" Type="Self.tb_evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_status">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="tb_evaluation">
+              <PropertyRef Name="EvaluationStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_evaluator_tb_lecturer">
+          <End Role="tb_lecturer" Type="Self.tb_lecturer" Multiplicity="1" />
+          <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_lecturer">
+              <PropertyRef Name="IC" />
+            </Principal>
+            <Dependent Role="tb_evaluator">
+              <PropertyRef Name="EvaluatorIC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_lecturer_tb_domain">
+          <End Role="tb_domain" Type="Self.tb_domain" Multiplicity="0..1" />
+          <End Role="tb_lecturer" Type="Self.tb_lecturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_domain">
+              <PropertyRef Name="DomainID" />
+            </Principal>
+            <Dependent Role="tb_lecturer">
+              <PropertyRef Name="Domain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_lecturer_tb_program">
+          <End Role="tb_program" Type="Self.tb_program" Multiplicity="1" />
+          <End Role="tb_lecturer" Type="Self.tb_lecturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_program">
+              <PropertyRef Name="ProgramID" />
+            </Principal>
+            <Dependent Role="tb_lecturer">
+              <PropertyRef Name="ProgramCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_proposal_tb_evaluator">
+          <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="0..1" />
+          <End Role="tb_proposal" Type="Self.tb_proposal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_evaluator">
+              <PropertyRef Name="EvaluatorIC" />
+              <PropertyRef Name="OwnedStudentIC" />
+            </Principal>
+            <Dependent Role="tb_proposal">
+              <PropertyRef Name="Evaluator1" />
+              <PropertyRef Name="StudentIC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_proposal_tb_evaluator1">
+          <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="0..1" />
+          <End Role="tb_proposal" Type="Self.tb_proposal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_evaluator">
+              <PropertyRef Name="EvaluatorIC" />
+              <PropertyRef Name="OwnedStudentIC" />
+            </Principal>
+            <Dependent Role="tb_proposal">
+              <PropertyRef Name="Evaluator2" />
+              <PropertyRef Name="StudentIC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_student_tb_domain">
+          <End Role="tb_domain" Type="Self.tb_domain" Multiplicity="0..1" />
+          <End Role="tb_student" Type="Self.tb_student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_domain">
+              <PropertyRef Name="DomainID" />
+            </Principal>
+            <Dependent Role="tb_student">
+              <PropertyRef Name="Domain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_student_tb_program">
+          <End Role="tb_program" Type="Self.tb_program" Multiplicity="1" />
+          <End Role="tb_student" Type="Self.tb_student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_program">
+              <PropertyRef Name="ProgramID" />
+            </Principal>
+            <Dependent Role="tb_student">
+              <PropertyRef Name="ProgramCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_student_tb_proposal">
+          <End Role="tb_proposal" Type="Self.tb_proposal" Multiplicity="0..1" />
+          <End Role="tb_student" Type="Self.tb_student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_proposal">
+              <PropertyRef Name="ProposalID" />
+            </Principal>
+            <Dependent Role="tb_student">
+              <PropertyRef Name="ProposalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_student_tb_sv">
+          <End Role="tb_sv" Type="Self.tb_sv" Multiplicity="0..1" />
+          <End Role="tb_student" Type="Self.tb_student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_sv">
+              <PropertyRef Name="SupervisorIC" />
+            </Principal>
+            <Dependent Role="tb_student">
+              <PropertyRef Name="Supervisor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_sv_tb_lecturer">
+          <End Role="tb_lecturer" Type="Self.tb_lecturer" Multiplicity="1" />
+          <End Role="tb_sv" Type="Self.tb_sv" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tb_lecturer">
+              <PropertyRef Name="IC" />
+            </Principal>
+            <Dependent Role="tb_sv">
+              <PropertyRef Name="SupervisorIC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_psmportalModelStoreContainer">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_domain" EntityType="Self.tb_domain" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_evaluation" EntityType="Self.tb_evaluation" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_evaluator" EntityType="Self.tb_evaluator" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_lecturer" EntityType="Self.tb_lecturer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_program" EntityType="Self.tb_program" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_proposal" EntityType="Self.tb_proposal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_status" EntityType="Self.tb_status" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_student" EntityType="Self.tb_student" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_sv" EntityType="Self.tb_sv" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_tb_evaluation_tb_evaluator" Association="Self.FK_tb_evaluation_tb_evaluator">
+            <End Role="tb_evaluator" EntitySet="tb_evaluator" />
+            <End Role="tb_evaluation" EntitySet="tb_evaluation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_evaluation_tb_proposal" Association="Self.FK_tb_evaluation_tb_proposal">
+            <End Role="tb_proposal" EntitySet="tb_proposal" />
+            <End Role="tb_evaluation" EntitySet="tb_evaluation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_evaluation_tb_status" Association="Self.FK_tb_evaluation_tb_status">
+            <End Role="tb_status" EntitySet="tb_status" />
+            <End Role="tb_evaluation" EntitySet="tb_evaluation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_evaluator_tb_lecturer" Association="Self.FK_tb_evaluator_tb_lecturer">
+            <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+            <End Role="tb_evaluator" EntitySet="tb_evaluator" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_lecturer_tb_domain" Association="Self.FK_tb_lecturer_tb_domain">
+            <End Role="tb_domain" EntitySet="tb_domain" />
+            <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_lecturer_tb_program" Association="Self.FK_tb_lecturer_tb_program">
+            <End Role="tb_program" EntitySet="tb_program" />
+            <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_proposal_tb_evaluator" Association="Self.FK_tb_proposal_tb_evaluator">
+            <End Role="tb_evaluator" EntitySet="tb_evaluator" />
+            <End Role="tb_proposal" EntitySet="tb_proposal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_proposal_tb_evaluator1" Association="Self.FK_tb_proposal_tb_evaluator1">
+            <End Role="tb_evaluator" EntitySet="tb_evaluator" />
+            <End Role="tb_proposal" EntitySet="tb_proposal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_student_tb_domain" Association="Self.FK_tb_student_tb_domain">
+            <End Role="tb_domain" EntitySet="tb_domain" />
+            <End Role="tb_student" EntitySet="tb_student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_student_tb_program" Association="Self.FK_tb_student_tb_program">
+            <End Role="tb_program" EntitySet="tb_program" />
+            <End Role="tb_student" EntitySet="tb_student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_student_tb_proposal" Association="Self.FK_tb_student_tb_proposal">
+            <End Role="tb_proposal" EntitySet="tb_proposal" />
+            <End Role="tb_student" EntitySet="tb_student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_student_tb_sv" Association="Self.FK_tb_student_tb_sv">
+            <End Role="tb_sv" EntitySet="tb_sv" />
+            <End Role="tb_student" EntitySet="tb_student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_sv_tb_lecturer" Association="Self.FK_tb_sv_tb_lecturer">
+            <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+            <End Role="tb_sv" EntitySet="tb_sv" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="db_psmportalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="sysdiagram">
+          <Key>
+            <PropertyRef Name="diagram_id" />
+          </Key>
+          <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="principal_id" Type="Int32" Nullable="false" />
+          <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="version" Type="Int32" />
+          <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+        </EntityType>
+        <EntityType Name="tb_domain">
+          <Key>
+            <PropertyRef Name="DomainID" />
+          </Key>
+          <Property Name="DomainID" Type="Int32" Nullable="false" />
+          <Property Name="DomainName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tb_lecturer" Relationship="Self.FK_tb_lecturer_tb_domain" FromRole="tb_domain" ToRole="tb_lecturer" />
+          <NavigationProperty Name="tb_student" Relationship="Self.FK_tb_student_tb_domain" FromRole="tb_domain" ToRole="tb_student" />
+        </EntityType>
+        <EntityType Name="tb_evaluation">
+          <Key>
+            <PropertyRef Name="EvaluationID" />
+          </Key>
+          <Property Name="EvaluationID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="EvaluatorIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StudentIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ProposalID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="EvaluationComment" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="EvaluationMarks" Type="Int32" />
+          <Property Name="EvaluationStatus" Type="Int32" />
+          <NavigationProperty Name="tb_evaluator" Relationship="Self.FK_tb_evaluation_tb_evaluator" FromRole="tb_evaluation" ToRole="tb_evaluator" />
+          <NavigationProperty Name="tb_proposal" Relationship="Self.FK_tb_evaluation_tb_proposal" FromRole="tb_evaluation" ToRole="tb_proposal" />
+          <NavigationProperty Name="tb_status" Relationship="Self.FK_tb_evaluation_tb_status" FromRole="tb_evaluation" ToRole="tb_status" />
+        </EntityType>
+        <EntityType Name="tb_evaluator">
+          <Key>
+            <PropertyRef Name="EvaluatorIC" />
+            <PropertyRef Name="OwnedStudentIC" />
+          </Key>
+          <Property Name="EvaluatorIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OwnedStudentIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tb_evaluation" Relationship="Self.FK_tb_evaluation_tb_evaluator" FromRole="tb_evaluator" ToRole="tb_evaluation" />
+          <NavigationProperty Name="tb_lecturer" Relationship="Self.FK_tb_evaluator_tb_lecturer" FromRole="tb_evaluator" ToRole="tb_lecturer" />
+          <NavigationProperty Name="tb_proposal" Relationship="Self.FK_tb_proposal_tb_evaluator" FromRole="tb_evaluator" ToRole="tb_proposal" />
+          <NavigationProperty Name="tb_proposal1" Relationship="Self.FK_tb_proposal_tb_evaluator1" FromRole="tb_evaluator" ToRole="tb_proposal" />
+        </EntityType>
+        <EntityType Name="tb_lecturer">
+          <Key>
+            <PropertyRef Name="IC" />
+          </Key>
+          <Property Name="IC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProgramCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Domain" Type="Int32" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_domain" Relationship="Self.FK_tb_lecturer_tb_domain" FromRole="tb_lecturer" ToRole="tb_domain" />
+          <NavigationProperty Name="tb_evaluator" Relationship="Self.FK_tb_evaluator_tb_lecturer" FromRole="tb_lecturer" ToRole="tb_evaluator" />
+          <NavigationProperty Name="tb_program" Relationship="Self.FK_tb_lecturer_tb_program" FromRole="tb_lecturer" ToRole="tb_program" />
+          <NavigationProperty Name="tb_sv" Relationship="Self.FK_tb_sv_tb_lecturer" FromRole="tb_lecturer" ToRole="tb_sv" />
+        </EntityType>
+        <EntityType Name="tb_program">
+          <Key>
+            <PropertyRef Name="ProgramID" />
+          </Key>
+          <Property Name="ProgramID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProgramName" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tb_lecturer" Relationship="Self.FK_tb_lecturer_tb_program" FromRole="tb_program" ToRole="tb_lecturer" />
+          <NavigationProperty Name="tb_student" Relationship="Self.FK_tb_student_tb_program" FromRole="tb_program" ToRole="tb_student" />
+        </EntityType>
+        <EntityType Name="tb_proposal">
+          <Key>
+            <PropertyRef Name="ProposalID" />
+          </Key>
+          <Property Name="ProposalID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProposalDoc" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="DateUploaded" Type="DateTime" Precision="3" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Evaluator1" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Evaluator2" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StudentIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_evaluation" Relationship="Self.FK_tb_evaluation_tb_proposal" FromRole="tb_proposal" ToRole="tb_evaluation" />
+          <NavigationProperty Name="tb_evaluator" Relationship="Self.FK_tb_proposal_tb_evaluator" FromRole="tb_proposal" ToRole="tb_evaluator" />
+          <NavigationProperty Name="tb_evaluator1" Relationship="Self.FK_tb_proposal_tb_evaluator1" FromRole="tb_proposal" ToRole="tb_evaluator" />
+          <NavigationProperty Name="tb_student" Relationship="Self.FK_tb_student_tb_proposal" FromRole="tb_proposal" ToRole="tb_student" />
+        </EntityType>
+        <EntityType Name="tb_status">
+          <Key>
+            <PropertyRef Name="StatusID" />
+          </Key>
+          <Property Name="StatusID" Type="Int32" Nullable="false" />
+          <Property Name="StatusName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tb_evaluation" Relationship="Self.FK_tb_evaluation_tb_status" FromRole="tb_status" ToRole="tb_evaluation" />
+        </EntityType>
+        <EntityType Name="tb_student">
+          <Key>
+            <PropertyRef Name="IC" />
+          </Key>
+          <Property Name="IC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MatricNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ProgramCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Email" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="MobileNo" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="AcademicSession" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Supervisor" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Agreement" Type="Binary" MaxLength="Max" FixedLength="false" />
+          <Property Name="Domain" Type="Int32" />
+          <Property Name="ProposalID" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="tb_domain" Relationship="Self.FK_tb_student_tb_domain" FromRole="tb_student" ToRole="tb_domain" />
+          <NavigationProperty Name="tb_program" Relationship="Self.FK_tb_student_tb_program" FromRole="tb_student" ToRole="tb_program" />
+          <NavigationProperty Name="tb_proposal" Relationship="Self.FK_tb_student_tb_proposal" FromRole="tb_student" ToRole="tb_proposal" />
+          <NavigationProperty Name="tb_sv" Relationship="Self.FK_tb_student_tb_sv" FromRole="tb_student" ToRole="tb_sv" />
+        </EntityType>
+        <EntityType Name="tb_sv">
+          <Key>
+            <PropertyRef Name="SupervisorIC" />
+          </Key>
+          <Property Name="SupervisorIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="OwnedStudentIC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <NavigationProperty Name="tb_lecturer" Relationship="Self.FK_tb_sv_tb_lecturer" FromRole="tb_sv" ToRole="tb_lecturer" />
+          <NavigationProperty Name="tb_student" Relationship="Self.FK_tb_student_tb_sv" FromRole="tb_sv" ToRole="tb_student" />
+        </EntityType>
+        <Association Name="FK_tb_lecturer_tb_domain">
+          <End Role="tb_domain" Type="Self.tb_domain" Multiplicity="0..1" />
+          <End Role="tb_lecturer" Type="Self.tb_lecturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_domain">
+              <PropertyRef Name="DomainID" />
+            </Principal>
+            <Dependent Role="tb_lecturer">
+              <PropertyRef Name="Domain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_student_tb_domain">
+          <End Role="tb_domain" Type="Self.tb_domain" Multiplicity="0..1" />
+          <End Role="tb_student" Type="Self.tb_student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_domain">
+              <PropertyRef Name="DomainID" />
+            </Principal>
+            <Dependent Role="tb_student">
+              <PropertyRef Name="Domain" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_evaluation_tb_evaluator">
+          <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="0..1" />
+          <End Role="tb_evaluation" Type="Self.tb_evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_evaluator">
+              <PropertyRef Name="EvaluatorIC" />
+              <PropertyRef Name="OwnedStudentIC" />
+            </Principal>
+            <Dependent Role="tb_evaluation">
+              <PropertyRef Name="EvaluatorIC" />
+              <PropertyRef Name="StudentIC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_evaluation_tb_proposal">
+          <End Role="tb_proposal" Type="Self.tb_proposal" Multiplicity="0..1" />
+          <End Role="tb_evaluation" Type="Self.tb_evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_proposal">
+              <PropertyRef Name="ProposalID" />
+            </Principal>
+            <Dependent Role="tb_evaluation">
+              <PropertyRef Name="ProposalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_evaluation_tb_status">
+          <End Role="tb_status" Type="Self.tb_status" Multiplicity="0..1" />
+          <End Role="tb_evaluation" Type="Self.tb_evaluation" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_status">
+              <PropertyRef Name="StatusID" />
+            </Principal>
+            <Dependent Role="tb_evaluation">
+              <PropertyRef Name="EvaluationStatus" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_evaluator_tb_lecturer">
+          <End Role="tb_lecturer" Type="Self.tb_lecturer" Multiplicity="1" />
+          <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_lecturer">
+              <PropertyRef Name="IC" />
+            </Principal>
+            <Dependent Role="tb_evaluator">
+              <PropertyRef Name="EvaluatorIC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_proposal_tb_evaluator">
+          <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="0..1" />
+          <End Role="tb_proposal" Type="Self.tb_proposal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_evaluator">
+              <PropertyRef Name="EvaluatorIC" />
+              <PropertyRef Name="OwnedStudentIC" />
+            </Principal>
+            <Dependent Role="tb_proposal">
+              <PropertyRef Name="Evaluator1" />
+              <PropertyRef Name="StudentIC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_proposal_tb_evaluator1">
+          <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="0..1" />
+          <End Role="tb_proposal" Type="Self.tb_proposal" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_evaluator">
+              <PropertyRef Name="EvaluatorIC" />
+              <PropertyRef Name="OwnedStudentIC" />
+            </Principal>
+            <Dependent Role="tb_proposal">
+              <PropertyRef Name="Evaluator2" />
+              <PropertyRef Name="StudentIC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_lecturer_tb_program">
+          <End Role="tb_program" Type="Self.tb_program" Multiplicity="1" />
+          <End Role="tb_lecturer" Type="Self.tb_lecturer" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_program">
+              <PropertyRef Name="ProgramID" />
+            </Principal>
+            <Dependent Role="tb_lecturer">
+              <PropertyRef Name="ProgramCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_sv_tb_lecturer">
+          <End Role="tb_lecturer" Type="Self.tb_lecturer" Multiplicity="1" />
+          <End Role="tb_sv" Type="Self.tb_sv" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tb_lecturer">
+              <PropertyRef Name="IC" />
+            </Principal>
+            <Dependent Role="tb_sv">
+              <PropertyRef Name="SupervisorIC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_student_tb_program">
+          <End Role="tb_program" Type="Self.tb_program" Multiplicity="1" />
+          <End Role="tb_student" Type="Self.tb_student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_program">
+              <PropertyRef Name="ProgramID" />
+            </Principal>
+            <Dependent Role="tb_student">
+              <PropertyRef Name="ProgramCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_student_tb_proposal">
+          <End Role="tb_proposal" Type="Self.tb_proposal" Multiplicity="0..1" />
+          <End Role="tb_student" Type="Self.tb_student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_proposal">
+              <PropertyRef Name="ProposalID" />
+            </Principal>
+            <Dependent Role="tb_student">
+              <PropertyRef Name="ProposalID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_student_tb_sv">
+          <End Role="tb_sv" Type="Self.tb_sv" Multiplicity="0..1" />
+          <End Role="tb_student" Type="Self.tb_student" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_sv">
+              <PropertyRef Name="SupervisorIC" />
+            </Principal>
+            <Dependent Role="tb_student">
+              <PropertyRef Name="Supervisor" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="db_psmportalEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagram" />
+          <EntitySet Name="tb_domain" EntityType="Self.tb_domain" />
+          <EntitySet Name="tb_evaluation" EntityType="Self.tb_evaluation" />
+          <EntitySet Name="tb_evaluator" EntityType="Self.tb_evaluator" />
+          <EntitySet Name="tb_lecturer" EntityType="Self.tb_lecturer" />
+          <EntitySet Name="tb_program" EntityType="Self.tb_program" />
+          <EntitySet Name="tb_proposal" EntityType="Self.tb_proposal" />
+          <EntitySet Name="tb_status" EntityType="Self.tb_status" />
+          <EntitySet Name="tb_student" EntityType="Self.tb_student" />
+          <EntitySet Name="tb_sv" EntityType="Self.tb_sv" />
+          <AssociationSet Name="FK_tb_lecturer_tb_domain" Association="Self.FK_tb_lecturer_tb_domain">
+            <End Role="tb_domain" EntitySet="tb_domain" />
+            <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_student_tb_domain" Association="Self.FK_tb_student_tb_domain">
+            <End Role="tb_domain" EntitySet="tb_domain" />
+            <End Role="tb_student" EntitySet="tb_student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_evaluation_tb_evaluator" Association="Self.FK_tb_evaluation_tb_evaluator">
+            <End Role="tb_evaluator" EntitySet="tb_evaluator" />
+            <End Role="tb_evaluation" EntitySet="tb_evaluation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_evaluation_tb_proposal" Association="Self.FK_tb_evaluation_tb_proposal">
+            <End Role="tb_proposal" EntitySet="tb_proposal" />
+            <End Role="tb_evaluation" EntitySet="tb_evaluation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_evaluation_tb_status" Association="Self.FK_tb_evaluation_tb_status">
+            <End Role="tb_status" EntitySet="tb_status" />
+            <End Role="tb_evaluation" EntitySet="tb_evaluation" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_evaluator_tb_lecturer" Association="Self.FK_tb_evaluator_tb_lecturer">
+            <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+            <End Role="tb_evaluator" EntitySet="tb_evaluator" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_proposal_tb_evaluator" Association="Self.FK_tb_proposal_tb_evaluator">
+            <End Role="tb_evaluator" EntitySet="tb_evaluator" />
+            <End Role="tb_proposal" EntitySet="tb_proposal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_proposal_tb_evaluator1" Association="Self.FK_tb_proposal_tb_evaluator1">
+            <End Role="tb_evaluator" EntitySet="tb_evaluator" />
+            <End Role="tb_proposal" EntitySet="tb_proposal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_lecturer_tb_program" Association="Self.FK_tb_lecturer_tb_program">
+            <End Role="tb_program" EntitySet="tb_program" />
+            <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_sv_tb_lecturer" Association="Self.FK_tb_sv_tb_lecturer">
+            <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+            <End Role="tb_sv" EntitySet="tb_sv" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_student_tb_program" Association="Self.FK_tb_student_tb_program">
+            <End Role="tb_program" EntitySet="tb_program" />
+            <End Role="tb_student" EntitySet="tb_student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_student_tb_proposal" Association="Self.FK_tb_student_tb_proposal">
+            <End Role="tb_proposal" EntitySet="tb_proposal" />
+            <End Role="tb_student" EntitySet="tb_student" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_student_tb_sv" Association="Self.FK_tb_student_tb_sv">
+            <End Role="tb_sv" EntitySet="tb_sv" />
+            <End Role="tb_student" EntitySet="tb_student" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="db_psmportalModelStoreContainer" CdmEntityContainer="db_psmportalEntities">
+          <EntitySetMapping Name="sysdiagrams">
+            <EntityTypeMapping TypeName="db_psmportalModel.sysdiagram">
+              <MappingFragment StoreEntitySet="sysdiagrams">
+                <ScalarProperty Name="name" ColumnName="name" />
+                <ScalarProperty Name="principal_id" ColumnName="principal_id" />
+                <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
+                <ScalarProperty Name="version" ColumnName="version" />
+                <ScalarProperty Name="definition" ColumnName="definition" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_domain">
+            <EntityTypeMapping TypeName="db_psmportalModel.tb_domain">
+              <MappingFragment StoreEntitySet="tb_domain">
+                <ScalarProperty Name="DomainID" ColumnName="DomainID" />
+                <ScalarProperty Name="DomainName" ColumnName="DomainName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_evaluation">
+            <EntityTypeMapping TypeName="db_psmportalModel.tb_evaluation">
+              <MappingFragment StoreEntitySet="tb_evaluation">
+                <ScalarProperty Name="EvaluationID" ColumnName="EvaluationID" />
+                <ScalarProperty Name="EvaluatorIC" ColumnName="EvaluatorIC" />
+                <ScalarProperty Name="StudentIC" ColumnName="StudentIC" />
+                <ScalarProperty Name="ProposalID" ColumnName="ProposalID" />
+                <ScalarProperty Name="EvaluationComment" ColumnName="EvaluationComment" />
+                <ScalarProperty Name="EvaluationMarks" ColumnName="EvaluationMarks" />
+                <ScalarProperty Name="EvaluationStatus" ColumnName="EvaluationStatus" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_evaluator">
+            <EntityTypeMapping TypeName="db_psmportalModel.tb_evaluator">
+              <MappingFragment StoreEntitySet="tb_evaluator">
+                <ScalarProperty Name="EvaluatorIC" ColumnName="EvaluatorIC" />
+                <ScalarProperty Name="OwnedStudentIC" ColumnName="OwnedStudentIC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_lecturer">
+            <EntityTypeMapping TypeName="db_psmportalModel.tb_lecturer">
+              <MappingFragment StoreEntitySet="tb_lecturer">
+                <ScalarProperty Name="IC" ColumnName="IC" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProgramCode" ColumnName="ProgramCode" />
+                <ScalarProperty Name="Domain" ColumnName="Domain" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_program">
+            <EntityTypeMapping TypeName="db_psmportalModel.tb_program">
+              <MappingFragment StoreEntitySet="tb_program">
+                <ScalarProperty Name="ProgramID" ColumnName="ProgramID" />
+                <ScalarProperty Name="ProgramName" ColumnName="ProgramName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_proposal">
+            <EntityTypeMapping TypeName="db_psmportalModel.tb_proposal">
+              <MappingFragment StoreEntitySet="tb_proposal">
+                <ScalarProperty Name="ProposalID" ColumnName="ProposalID" />
+                <ScalarProperty Name="Title" ColumnName="Title" />
+                <ScalarProperty Name="ProposalDoc" ColumnName="ProposalDoc" />
+                <ScalarProperty Name="DateUploaded" ColumnName="DateUploaded" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="Evaluator1" ColumnName="Evaluator1" />
+                <ScalarProperty Name="Evaluator2" ColumnName="Evaluator2" />
+                <ScalarProperty Name="StudentIC" ColumnName="StudentIC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_status">
+            <EntityTypeMapping TypeName="db_psmportalModel.tb_status">
+              <MappingFragment StoreEntitySet="tb_status">
+                <ScalarProperty Name="StatusID" ColumnName="StatusID" />
+                <ScalarProperty Name="StatusName" ColumnName="StatusName" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_student">
+            <EntityTypeMapping TypeName="db_psmportalModel.tb_student">
+              <MappingFragment StoreEntitySet="tb_student">
+                <ScalarProperty Name="IC" ColumnName="IC" />
+                <ScalarProperty Name="MatricNo" ColumnName="MatricNo" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ProgramCode" ColumnName="ProgramCode" />
+                <ScalarProperty Name="Email" ColumnName="Email" />
+                <ScalarProperty Name="MobileNo" ColumnName="MobileNo" />
+                <ScalarProperty Name="AcademicSession" ColumnName="AcademicSession" />
+                <ScalarProperty Name="Supervisor" ColumnName="Supervisor" />
+                <ScalarProperty Name="Agreement" ColumnName="Agreement" />
+                <ScalarProperty Name="Domain" ColumnName="Domain" />
+                <ScalarProperty Name="ProposalID" ColumnName="ProposalID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_sv">
+            <EntityTypeMapping TypeName="db_psmportalModel.tb_sv">
+              <MappingFragment StoreEntitySet="tb_sv">
+                <ScalarProperty Name="SupervisorIC" ColumnName="SupervisorIC" />
+                <ScalarProperty Name="OwnedStudentIC" ColumnName="OwnedStudentIC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
