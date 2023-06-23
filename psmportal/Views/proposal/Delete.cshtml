@@ -1,0 +1,72 @@
+﻿@model psmportal.Models.tb_proposal
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>tb_proposal</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProposalDoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProposalDoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateUploaded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateUploaded)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_evaluator.EvaluatorIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_evaluator.EvaluatorIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_evaluator1.EvaluatorIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_evaluator1.EvaluatorIC)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

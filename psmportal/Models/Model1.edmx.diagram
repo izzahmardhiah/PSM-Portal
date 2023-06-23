@@ -28,6 +28,7 @@
         <AssociationConnector Association="db_psmportalModel.FK_tb_student_tb_program" ManuallyRouted="false" />
         <AssociationConnector Association="db_psmportalModel.FK_tb_student_tb_proposal" ManuallyRouted="false" />
         <AssociationConnector Association="db_psmportalModel.FK_tb_student_tb_sv" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="db_psmportalModel.tb_user" Width="1.5" PointX="5.375" PointY="0.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

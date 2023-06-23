@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="db_psmportalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="db_psmportalModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="sysdiagrams">
           <Key>
             <PropertyRef Name="diagram_id" />
@@ -102,6 +102,14 @@
           </Key>
           <Property Name="SupervisorIC" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="OwnedStudentIC" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="tb_user">
+          <Key>
+            <PropertyRef Name="IC" />
+          </Key>
+          <Property Name="IC" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Role" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_tb_evaluation_tb_evaluator">
           <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="0..1" />
@@ -276,6 +284,7 @@
           <EntitySet Name="tb_status" EntityType="Self.tb_status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_student" EntityType="Self.tb_student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sv" EntityType="Self.tb_sv" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_user" EntityType="Self.tb_user" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_tb_evaluation_tb_evaluator" Association="Self.FK_tb_evaluation_tb_evaluator">
             <End Role="tb_evaluator" EntitySet="tb_evaluator" />
             <End Role="tb_evaluation" EntitySet="tb_evaluation" />
@@ -329,8 +338,7 @@
             <End Role="tb_sv" EntitySet="tb_sv" />
           </AssociationSet>
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="db_psmportalModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -683,7 +691,16 @@
             <End Role="tb_sv" EntitySet="tb_sv" />
             <End Role="tb_student" EntitySet="tb_student" />
           </AssociationSet>
+          <EntitySet Name="tb_user" EntityType="db_psmportalModel.tb_user" />
         </EntityContainer>
+        <EntityType Name="tb_user">
+          <Key>
+            <PropertyRef Name="IC" />
+          </Key>
+          <Property Name="IC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Role" Type="Int32" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -794,6 +811,15 @@
               <MappingFragment StoreEntitySet="tb_sv">
                 <ScalarProperty Name="SupervisorIC" ColumnName="SupervisorIC" />
                 <ScalarProperty Name="OwnedStudentIC" ColumnName="OwnedStudentIC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_user">
+            <EntityTypeMapping TypeName="db_psmportalModel.tb_user">
+              <MappingFragment StoreEntitySet="tb_user">
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+                <ScalarProperty Name="IC" ColumnName="IC" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

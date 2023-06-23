@@ -349,5 +349,14 @@
       <End Role="tb_sv" EntitySet="tb_sv" />
       <End Role="tb_student" EntitySet="tb_student" />
     </AssociationSet>
+    <EntitySet Name="tb_user" EntityType="db_psmportalModel.tb_user" />
   </EntityContainer>
+  <EntityType Name="tb_user">
+    <Key>
+      <PropertyRef Name="IC" />
+    </Key>
+    <Property Name="IC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Role" Type="Int32" Nullable="false" />
+  </EntityType>
 </Schema>

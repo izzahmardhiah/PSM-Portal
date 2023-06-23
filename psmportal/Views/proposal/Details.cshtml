@@ -1,0 +1,66 @@
+﻿@model psmportal.Models.tb_proposal
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tb_proposal</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ProposalDoc)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ProposalDoc)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DateUploaded)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DateUploaded)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_evaluator.EvaluatorIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_evaluator.EvaluatorIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_evaluator1.EvaluatorIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_evaluator1.EvaluatorIC)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ProposalID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

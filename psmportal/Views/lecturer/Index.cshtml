@@ -73,17 +73,20 @@
                                                 <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.MobileNo)</p>
                                             </td>
                                             <td class="align-middle text-center text-sm">
-                                                <span class="badge badge-sm bg-gradient-success">@Html.DisplayFor(modelItem => item.tb_domain.DomainName)</span>
+                                                <span class="badge badge-sm @(item.tb_domain.DomainID == 1 ? "bg-gradient-success" : item.tb_domain.DomainID == 2 ? "bg-gradient-info" : "")">
+                                                    @Html.DisplayFor(modelItem => item.tb_domain.DomainName)
+                                                </span>
                                             </td>
+
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">@Html.DisplayFor(modelItem => item.tb_program.ProgramName)</span>
                                             </td>
                                             <td class="align-middle">
                                                 <a href="@Url.Action("Edit", "lecturer" , new { id=item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                    <i class="fa-sharp fa-solid fa-pencil fa-lg" style="color: #ffcb3d;"></i>   
+                                                    <i class="fa-sharp fa-solid fa-pencil fa-lg" style="color: #ffcb3d;"></i>
                                                 </a>
                                                 <a href="@Url.Action("Details", "lecturer" , new { id=item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Details user">
-                                                    <i class="fa-sharp fa-solid fa-eye fa-lg" style="color: #2d5eb4;"></i>   
+                                                    <i class="fa-sharp fa-solid fa-eye fa-lg" style="color: #2d5eb4;"></i>
                                                 </a>
                                                 <a href="@Url.Action("Delete", "lecturer" , new { id=item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
                                                     <i class="fa-sharp fa-solid fa-trash fa-lg" style="color: #ff5252;"></i>
