@@ -30,5 +30,6 @@ namespace psmportal.Models
         public virtual tb_program tb_program { get; set; }
         public virtual tb_proposal tb_proposal { get; set; }
         public virtual tb_sv tb_sv { get; set; }
+        public virtual tb_user tb_user { get; set; }
     }
 }

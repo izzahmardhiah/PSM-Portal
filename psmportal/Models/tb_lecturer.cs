@@ -32,5 +32,6 @@ namespace psmportal.Models
         public virtual ICollection<tb_evaluator> tb_evaluator { get; set; }
         public virtual tb_program tb_program { get; set; }
         public virtual tb_sv tb_sv { get; set; }
+        public virtual tb_user tb_user { get; set; }
     }
 }

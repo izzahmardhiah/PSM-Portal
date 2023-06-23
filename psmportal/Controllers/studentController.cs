@@ -55,9 +55,24 @@ namespace psmportal.Controllers
         {
             if (ModelState.IsValid)
             {
+                // Create a new instance of tb_user and assign values
+                tb_user user = new tb_user();
+                user.IC = tb_student.IC;
+                user.Password = tb_student.MobileNo;
+                user.Role = 3;
+
+                // Add the user to the context and save changes
+                db.tb_user.Add(user);
+                db.SaveChanges();
+
+                // Assign the user's IC to the tb_student object
+                tb_student.IC = user.IC;
+
+                // Add the student to tb_student and save changes
                 db.tb_student.Add(tb_student);
                 db.SaveChanges();
-                return RedirectToAction("Index");
+
+                return RedirectToAction("Index", "Login");
             }
 
             ViewBag.Domain = new SelectList(db.tb_domain, "DomainID", "DomainName", tb_student.Domain);
@@ -66,6 +81,7 @@ namespace psmportal.Controllers
             ViewBag.Supervisor = new SelectList(db.tb_sv, "SupervisorIC", "OwnedStudentIC", tb_student.Supervisor);
             return View(tb_student);
         }
+
 
         // GET: student/Edit/5
         public ActionResult Edit(string id)

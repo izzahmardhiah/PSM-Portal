@@ -4,6 +4,19 @@
     ViewBag.Title = "Login";
 }
 
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        .custom-btn {
+            padding: 0.5rem 0.5rem;
+            width: 115%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    </style>
+</head>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -40,12 +53,34 @@
                                         </div>
                                     }
                                 </div>
-                                <div class="card-footer text-center pt-0 px-lg-2 px-1">
+                                <div class="card-footer text-center pt-0 px-lg-1 px-1">
                                     <p class="mb-4 text-sm mx-auto">
                                         Don't have an account?
                                         <a href="javascript:;" class="text-primary text-gradient font-weight-bold">Sign up</a>
                                     </p>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <a href="@Url.Action("Create", "student")" class="btn btn-secondary btn-icon d-flex align-items-center custom-btn">
+                                                <span class="btn-inner--icon me-2"><i class="fa-solid fa-graduation-cap" style="color: #ffffff;"></i></span>
+                                                <span class="btn-inner--text">Student</span>
+                                            </a>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <a href="@Url.Action("Create", "lecturer")" class="btn btn-secondary btn-icon d-flex align-items-center custom-btn">
+                                                <span class="btn-inner--icon me-2"><i class="fa-solid fa-chalkboard-user" style="color: #ffffff;"></i></span>
+                                                <span class="btn-inner--text">Lecturer</span>
+                                             </a>
+</div>
+                                        <div class="col-md-4">
+                                            <button type="button" class="btn btn-secondary btn-icon d-flex align-items-center custom-btn">
+                                                <span class="btn-inner--icon me-2"><i class="fa-solid fa-people-group" style="color: #ffffff;"></i></span>
+                                                <span class="btn-inner--text">Committee</span>
+                                            </button>
+                                        </div>
+                                    </div>
+
                                 </div>
+
                             </div>
                         </div>
                         <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column">

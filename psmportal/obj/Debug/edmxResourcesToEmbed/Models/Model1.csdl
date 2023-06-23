@@ -60,6 +60,7 @@
     <NavigationProperty Name="tb_evaluator" Relationship="Self.FK_tb_evaluator_tb_lecturer" FromRole="tb_lecturer" ToRole="tb_evaluator" />
     <NavigationProperty Name="tb_program" Relationship="Self.FK_tb_lecturer_tb_program" FromRole="tb_lecturer" ToRole="tb_program" />
     <NavigationProperty Name="tb_sv" Relationship="Self.FK_tb_sv_tb_lecturer" FromRole="tb_lecturer" ToRole="tb_sv" />
+    <NavigationProperty Name="tb_user" Relationship="db_psmportalModel.FK_tb_lecturer_tb_user" FromRole="tb_lecturer" ToRole="tb_user" />
   </EntityType>
   <EntityType Name="tb_program">
     <Key>
@@ -114,6 +115,7 @@
     <NavigationProperty Name="tb_program" Relationship="Self.FK_tb_student_tb_program" FromRole="tb_student" ToRole="tb_program" />
     <NavigationProperty Name="tb_proposal" Relationship="Self.FK_tb_student_tb_proposal" FromRole="tb_student" ToRole="tb_proposal" />
     <NavigationProperty Name="tb_sv" Relationship="Self.FK_tb_student_tb_sv" FromRole="tb_student" ToRole="tb_sv" />
+    <NavigationProperty Name="tb_user" Relationship="db_psmportalModel.FK_tb_student_tb_user" FromRole="tb_student" ToRole="tb_user" />
   </EntityType>
   <EntityType Name="tb_sv">
     <Key>
@@ -350,6 +352,14 @@
       <End Role="tb_student" EntitySet="tb_student" />
     </AssociationSet>
     <EntitySet Name="tb_user" EntityType="db_psmportalModel.tb_user" />
+    <AssociationSet Name="FK_tb_lecturer_tb_user" Association="db_psmportalModel.FK_tb_lecturer_tb_user">
+      <End Role="tb_user" EntitySet="tb_user" />
+      <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_student_tb_user" Association="db_psmportalModel.FK_tb_student_tb_user">
+      <End Role="tb_user" EntitySet="tb_user" />
+      <End Role="tb_student" EntitySet="tb_student" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="tb_user">
     <Key>
@@ -358,5 +368,33 @@
     <Property Name="IC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
     <Property Name="Role" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tb_lecturer" Relationship="db_psmportalModel.FK_tb_lecturer_tb_user" FromRole="tb_user" ToRole="tb_lecturer" />
+    <NavigationProperty Name="tb_student" Relationship="db_psmportalModel.FK_tb_student_tb_user" FromRole="tb_user" ToRole="tb_student" />
   </EntityType>
+  <Association Name="FK_tb_lecturer_tb_user">
+    <End Type="db_psmportalModel.tb_user" Role="tb_user" Multiplicity="1" />
+    <End Type="db_psmportalModel.tb_lecturer" Role="tb_lecturer" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="tb_user">
+        <PropertyRef Name="IC" />
+      </Principal>
+      <Dependent Role="tb_lecturer">
+        <PropertyRef Name="IC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_student_tb_user">
+    <End Type="db_psmportalModel.tb_user" Role="tb_user" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="db_psmportalModel.tb_student" Role="tb_student" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="tb_user">
+        <PropertyRef Name="IC" />
+      </Principal>
+      <Dependent Role="tb_student">
+        <PropertyRef Name="IC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema>

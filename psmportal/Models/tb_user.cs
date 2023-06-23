@@ -17,5 +17,8 @@ namespace psmportal.Models
         public string IC { get; set; }
         public string Password { get; set; }
         public int Role { get; set; }
+    
+        public virtual tb_lecturer tb_lecturer { get; set; }
+        public virtual tb_student tb_student { get; set; }
     }
 }

@@ -4,117 +4,128 @@
     ViewBag.Title = "Create";
 }
 
-<h2>Create</h2>
+<!DOCTYPE html>
+<html lang="en">
 
-
-@using (Html.BeginForm()) 
-{
-    @Html.AntiForgeryToken()
-    
-    <div class="form-horizontal">
-        <h4>tb_student</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.IC, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.IC, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.IC, "", new { @class = "text-danger" })
+<body class="">
+    <main class="main-content  mt-0">
+        <div class="page-header align-items-start min-vh-50 pt-5 pb-11 m-3 border-radius-lg" style="background-image: url('https://photos.utm.my/wp-content/uploads/2021/12/DSC00090-scaled.jpg'); background-position: bottom; ">
+            <span class="mask bg-gradient-dark opacity-6"></span>
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5 text-center mx-auto">
+                        <h3 class="text-white mb-2 mt-5">Portal Projek Sarjana Muda</h3>
+                        <p class="text-lead text-white">Universiti Teknologi Malaysia</p>
+                    </div>
+                </div>
             </div>
         </div>
+        <div class="container">
+            <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
+                <div class="col-xl-7 col-lg-8 col-md-12 mx-auto">
+                    <div class="card z-index-0 style="width: 900px;"">
+                        <div class="card-header text-center pt-4">
+                            <h4>Student Registration</h4>
+                        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.MatricNo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MatricNo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MatricNo, "", new { @class = "text-danger" })
+                        <div class="card-body">
+                            @using (Html.BeginForm())
+                            {
+                                @Html.AntiForgeryToken()
+
+                            <div class="form-horizontal">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="example-text-input" class="form-control-label">Identification No.</label>
+                                        @Html.EditorFor(model => model.IC, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.IC, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="example-text-input" class="form-control-label">Full Name</label>
+                                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="example-text-input" class="form-control-label">Matric No.</label>
+                                        @Html.EditorFor(model => model.MatricNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.MatricNo, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="example-text-input" class="form-control-label">Email</label>
+                                        @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="example-text-input" class="form-control-label">Mobile No.</label>
+                                        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="example-text-input" class="form-control-label">Programme</label>
+                                        @Html.DropDownList("ProgramCode", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.ProgramCode, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <label for="example-text-input" class="form-control-label">Academic Session</label>
+                                        @Html.EditorFor(model => model.AcademicSession, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.AcademicSession, "", new { @class = "text-danger" })
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="example-text-input" class="form-control-label">Domain</label>
+                                        @Html.DropDownList("Domain", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.Domain, "", new { @class = "text-danger" })
+                                    </div>
+
+                                </div>
+                                <hr>
+                                    <div class="form-group">
+                                        <div class="col-md-12">
+                                                <div class="col-md-6">
+                                                    <input type="submit" value="Create" class="btn btn-default" />
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                }
+
+                            </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </main>
+    <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
+    <footer class="footer py-5">
+        <div class="container">
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+            <div class="row">
+                <div class="col-8 mx-auto text-center mt-1">
+                    <p class="mb-0 text-secondary">
+                        &copy;
+                        <script>
+                            document.write(new Date().getFullYear())
+                        </script> Soft by Creative Tim.
+                    </p>
+                </div>
             </div>
         </div>
+    </footer>
+</body>
+</html>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProgramCode, "ProgramCode", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ProgramCode", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ProgramCode, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.MobileNo, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.AcademicSession, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.AcademicSession, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.AcademicSession, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Supervisor, "Supervisor", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Supervisor", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Supervisor, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Agreement, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Agreement, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Agreement, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Domain, "Domain", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("Domain", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Domain, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ProposalID, "ProposalID", htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.DropDownList("ProposalID", null, htmlAttributes: new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.ProposalID, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
-    </div>
-}
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
-
-@section Scripts {
-    @Scripts.Render("~/bundles/jqueryval")
-}
