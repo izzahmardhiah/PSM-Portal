@@ -1,0 +1,34 @@
+﻿@model psmportal.Models.tb_committee
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tb_committee</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_lecturer.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_lecturer.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_lecturer1.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_lecturer1.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.IC }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

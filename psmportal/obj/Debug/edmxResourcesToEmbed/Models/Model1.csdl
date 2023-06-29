@@ -61,6 +61,7 @@
     <NavigationProperty Name="tb_program" Relationship="Self.FK_tb_lecturer_tb_program" FromRole="tb_lecturer" ToRole="tb_program" />
     <NavigationProperty Name="tb_sv" Relationship="Self.FK_tb_sv_tb_lecturer" FromRole="tb_lecturer" ToRole="tb_sv" />
     <NavigationProperty Name="tb_user" Relationship="db_psmportalModel.FK_tb_lecturer_tb_user" FromRole="tb_lecturer" ToRole="tb_user" />
+    <NavigationProperty Name="tb_committee" Relationship="db_psmportalModel.FK_tb_committee_tb_lecturer" FromRole="tb_lecturer" ToRole="tb_committee" />
   </EntityType>
   <EntityType Name="tb_program">
     <Key>
@@ -360,6 +361,11 @@
       <End Role="tb_user" EntitySet="tb_user" />
       <End Role="tb_student" EntitySet="tb_student" />
     </AssociationSet>
+    <EntitySet Name="tb_committee" EntityType="db_psmportalModel.tb_committee" />
+    <AssociationSet Name="FK_tb_committee_tb_lecturer" Association="db_psmportalModel.FK_tb_committee_tb_lecturer">
+      <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+      <End Role="tb_committee" EntitySet="tb_committee" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="tb_user">
     <Key>
@@ -393,6 +399,27 @@
         <PropertyRef Name="IC" />
       </Principal>
       <Dependent Role="tb_student">
+        <PropertyRef Name="IC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tb_committee">
+    <Key>
+      <PropertyRef Name="IC" />
+    </Key>
+    <Property Name="IC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tb_lecturer" Relationship="db_psmportalModel.FK_tb_committee_tb_lecturer" FromRole="tb_committee" ToRole="tb_lecturer" />
+  </EntityType>
+  <Association Name="FK_tb_committee_tb_lecturer">
+    <End Type="db_psmportalModel.tb_lecturer" Role="tb_lecturer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Type="db_psmportalModel.tb_committee" Role="tb_committee" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="tb_lecturer">
+        <PropertyRef Name="IC" />
+      </Principal>
+      <Dependent Role="tb_committee">
         <PropertyRef Name="IC" />
       </Dependent>
     </ReferentialConstraint>

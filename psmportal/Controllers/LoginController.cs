@@ -25,10 +25,12 @@ namespace psmportal.Controllers
             {
                 using (db_psmportalEntities db = new db_psmportalEntities())
                 {
-                    var obj = db.tb_user.Where(a => a.IC.Equals(objchk.IC) && a.Password.Equals(objchk.Password)).FirstOrDefault();
-                    if (obj != null) 
+                    var user = db.tb_user.FirstOrDefault(a => a.IC.Equals(objchk.IC) && a.Password.Equals(objchk.Password));
+                    if (user != null)
                     {
-                        Session["IC"] = obj.IC.ToString();
+                        Session["IC"] = user.IC.ToString();
+                        Session["Role"] = user.Role.ToString(); // Store the user's role in the session
+
                         return RedirectToAction("Index", "Home");
                     }
                     else
@@ -40,6 +42,7 @@ namespace psmportal.Controllers
 
             return View(objchk);
         }
+
 
         public ActionResult Logout()
         {

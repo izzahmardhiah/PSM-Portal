@@ -4,84 +4,112 @@
     ViewBag.Title = "Index";
 }
 
-<h2>Index</h2>
-
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
-<table class="table">
-    <tr>
-        <th>
-            @Html.DisplayNameFor(model => model.MatricNo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Name)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Email)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.MobileNo)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.AcademicSession)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Agreement)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tb_domain.DomainName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tb_program.ProgramName)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tb_proposal.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.tb_sv.OwnedStudentIC)
-        </th>
-        <th></th>
-    </tr>
-
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.MatricNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Name)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Email)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.MobileNo)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.AcademicSession)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Agreement)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tb_domain.DomainName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tb_program.ProgramName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tb_proposal.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.tb_sv.OwnedStudentIC)
-        </td>
-        <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.IC }) |
-            @Html.ActionLink("Details", "Details", new { id=item.IC }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.IC })
-        </td>
-    </tr>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-</table>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        PSM Portal
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body class="g-sidenav-show   bg-gray-100">
+    <div class="min-height-300 bg-primary position-absolute w-100"></div>
+    @Html.Partial("_SideNavbar")
+    <main class="main-content position-relative border-radius-lg ">
+        @Html.Partial("_TopNavbar")
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header pb-0">
+                            <div class="d-flex align-items-center">
+                                <h4 class="mb-0">Student List</h4>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pt-0 pb-2">
+                            <div class="table-responsive p-0">
+                                <table class="table align-items-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Matric No.</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Mobile No.</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Academic Session</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Programme</th>
+                                            <th class="text-secondary opacity-7"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
+                                                        <div>
+                                                            <img src="~/Content/assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                                                        </div>
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm">@Html.DisplayFor(modelItem => item.Name)</h6>
+                                                            <p class="text-xs text-secondary mb-0">@Html.DisplayFor(modelItem => item.Email)</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.MatricNo)</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.MobileNo)</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.AcademicSession)</p>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="text-secondary text-xs font-weight-bold">@Html.DisplayFor(modelItem => item.ProgramCode)</span>
+                                                </td>
+                                                @*<td class="align-middle">
+                                                    <a href="@Url.Action("Edit", "student" , new { id=item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                                        <i class="fa-sharp fa-solid fa-pencil fa-lg" style="color: #ffcb3d;"></i>
+                                                    </a>
+                                                    <a href="@Url.Action("Details", "student" , new { id=item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Details user">
+                                                        <i class="fa-sharp fa-solid fa-eye fa-lg" style="color: #2d5eb4;"></i>
+                                                    </a>
+                                                    <a href="@Url.Action("Delete", "student" , new { id=item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                                                        <i class="fa-sharp fa-solid fa-trash fa-lg" style="color: #ff5252;"></i>
+                                                    </a>
+                                                </td>*@
+                                            <td>
+                                                <a href="@Url.Action("Details", "proposal")" class="btn btn-info btn-icon align-items-center btn-sm">
+                                                    <span class="btn-inner--icon"><i class="fa-solid fa-file-lines" style="color: #ffffff;"></i></span>
+                                                    <span class="btn-inner--text">Proposal 1</span>
+                                                </a>
+                                                <a href="@Url.Action("Details", "proposal")" class="btn btn-info btn-icon align-items-center btn-sm">
+                                                    <span class="btn-inner--icon"><i class="fa-solid fa-file-lines" style="color: #ffffff;"></i></span>
+                                                    <span class="btn-inner--text">Proposal 2</span>
+                                                </a>
+                                            </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @Html.Partial("_Footer")
+    </main>
+</body>
+
+</html>
+
+

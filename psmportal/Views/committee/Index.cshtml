@@ -1,9 +1,11 @@
-﻿@model IEnumerable<psmportal.Models.tb_proposal>
+﻿@model IEnumerable<psmportal.Models.tb_committee>
 
 @{
     ViewBag.Title = "Index";
 }
-
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -28,11 +30,11 @@
                     <div class="card mb-4">
                         <div class="card-header pb-0">
                             <div class="d-flex align-items-center">
-                                <h4 class="mb-0">Proposal FYP</h4>
+                                <h4 class="mb-0">Committee List</h4>
                                 <button class="btn btn-icon btn-3 btn bg-gradient-secondary ms-auto" type="button">
                                     <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
                                     <span class="btn-inner--text">
-                                        @Html.ActionLink("Create New", "Create", new { IC = Session["IC"] })
+                                        @Html.ActionLink("Create New", "Create")
                                     </span>
                                 </button>
 
@@ -43,10 +45,7 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date Uploaded</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student Name</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
                                     </thead>
@@ -60,27 +59,31 @@
                                                             <img src="~/Content/assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
                                                         </div>
                                                         <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">@Html.DisplayFor(modelItem => item.Title)</h6>                                                        </div>
+                                                            <h6 class="mb-0 text-sm">@Html.DisplayFor(modelItem => item.tb_lecturer.Name)</h6>
+                                                            <p class="text-xs text-secondary mb-0">@Html.DisplayFor(modelItem => item.tb_lecturer.Email)</p>
+                                                        </div>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0"></p>
+                                                    <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.tb_lecturer.MobileNo)</p>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
-                                                    <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.DateUploaded)</p>
+                                                    <span class="badge badge-sm @(item.tb_lecturer.tb_domain.DomainID == 1 ? "bg-gradient-success" : item.tb_lecturer.tb_domain.DomainID == 2 ? "bg-gradient-info" : "")">
+                                                        @Html.DisplayFor(modelItem => item.tb_lecturer.tb_domain.DomainName)
+                                                    </span>
                                                 </td>
 
                                                 <td class="align-middle text-center">
-                                                    <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.StudentIC)</p>
+                                                    <span class="text-secondary text-xs font-weight-bold">@Html.DisplayFor(modelItem => item.tb_lecturer.tb_program.ProgramName)</span>
                                                 </td>
                                                 <td class="align-middle">
-                                                    <a href="@Url.Action("Edit", "lecturer" , new { id=item.ProposalID })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                                    <a href="@Url.Action("Edit", "lecturer" , new { id=item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
                                                         <i class="fa-sharp fa-solid fa-pencil fa-lg" style="color: #ffcb3d;"></i>
                                                     </a>
-                                                    <a href="@Url.Action("Details", "lecturer" , new { id=item.ProposalID })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Details user">
+                                                    <a href="@Url.Action("Details", "lecturer" , new { id=item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Details user">
                                                         <i class="fa-sharp fa-solid fa-eye fa-lg" style="color: #2d5eb4;"></i>
                                                     </a>
-                                                    <a href="@Url.Action("Delete", "lecturer" , new { id=item.ProposalID })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                                                    <a href="@Url.Action("Delete", "lecturer" , new { id=item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
                                                         <i class="fa-sharp fa-solid fa-trash fa-lg" style="color: #ff5252;"></i>
                                                     </a>
                                                 </td>
@@ -95,7 +98,6 @@
             </div>
         </div>
         @Html.Partial("_Footer")
-        </div>
     </main>
 </body>
 

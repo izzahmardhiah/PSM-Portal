@@ -1,9 +1,8 @@
-﻿@model psmportal.Models.tb_proposal
+﻿@model psmportal.Models.tb_program
 
 @{
     ViewBag.Title = "Create";
 }
-
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -34,28 +33,27 @@
                         <div class="card">
                             <div class="card-header pb-0">
                                 <div class="d-flex align-items-center">
-                                    <h3 class="mb-0">Create Proposal</h3>
+                                    <h3 class="mb-0">Create New Program</h3>
                                 </div>
                             </div>
                             <div class="card-body">
-                                <p class="text-uppercase text-sm">Proposal Details</p>
-                                <div class="col-md-6">
-                                    <label for="example-text-input" class="form-control-label">Proposal ID</label>
-                                    @Html.EditorFor(model => model.ProposalID, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.ProposalID, "", new { @class = "text-danger" })
-                                </div>
+                                <p class="text-uppercase text-sm">Program Information</p>
 
-                                <div class="col-md-6">
-                                    <label for="example-text-input" class="form-control-label">Title</label>
-                                    <textarea name="Title" class="form-control" rows="4"></textarea>
-                                    @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
-                                </div>
-                                <hr />
-                                <div class="col-md-6">
-                                    <label for="example-text-input" class="form-control-label">Upload Proposal (PDF only)</label>
-                                    <input type="file" name="ProposalDoc" class="form-control" id="formFile" accept="application/pdf" />
-                                    @Html.ValidationMessageFor(model => model.ProposalDoc, "", new { @class = "text-danger" })
-                                </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">Program ID</label>
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.ProgramID, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.ProgramID, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="col-md-6">
+                                        <label for="example-text-input" class="form-control-label">Program Name</label>
+                                        @Html.EditorFor(model => model.ProgramName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ProgramName, "", new { @class = "text-danger" })
+                                    </div>
 
                                 <hr />
                                 <div class="form-group">

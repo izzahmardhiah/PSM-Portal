@@ -10,6 +10,12 @@
     <Property Name="version" Type="int" />
     <Property Name="definition" Type="varbinary(max)" />
   </EntityType>
+  <EntityType Name="tb_committee">
+    <Key>
+      <PropertyRef Name="IC" />
+    </Key>
+    <Property Name="IC" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
   <EntityType Name="tb_domain">
     <Key>
       <PropertyRef Name="DomainID" />
@@ -106,6 +112,20 @@
     <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Role" Type="int" Nullable="false" />
   </EntityType>
+  <Association Name="FK_tb_committee_tb_lecturer">
+    <End Role="tb_lecturer" Type="Self.tb_lecturer" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="tb_committee" Type="Self.tb_committee" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="tb_lecturer">
+        <PropertyRef Name="IC" />
+      </Principal>
+      <Dependent Role="tb_committee">
+        <PropertyRef Name="IC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tb_evaluation_tb_evaluator">
     <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -175,18 +195,6 @@
       </Principal>
       <Dependent Role="tb_lecturer">
         <PropertyRef Name="ProgramCode" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_tb_lecturer_tb_user">
-    <End Role="tb_user" Type="Self.tb_user" Multiplicity="1" />
-    <End Role="tb_lecturer" Type="Self.tb_lecturer" Multiplicity="0..1" />
-    <ReferentialConstraint>
-      <Principal Role="tb_user">
-        <PropertyRef Name="IC" />
-      </Principal>
-      <Dependent Role="tb_lecturer">
-        <PropertyRef Name="IC" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -286,6 +294,7 @@
   </Association>
   <EntityContainer Name="db_psmportalModelStoreContainer">
     <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_committee" EntityType="Self.tb_committee" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_domain" EntityType="Self.tb_domain" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_evaluation" EntityType="Self.tb_evaluation" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_evaluator" EntityType="Self.tb_evaluator" Schema="dbo" store:Type="Tables" />
@@ -296,6 +305,10 @@
     <EntitySet Name="tb_student" EntityType="Self.tb_student" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_sv" EntityType="Self.tb_sv" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_user" EntityType="Self.tb_user" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_tb_committee_tb_lecturer" Association="Self.FK_tb_committee_tb_lecturer">
+      <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+      <End Role="tb_committee" EntitySet="tb_committee" />
+    </AssociationSet>
     <AssociationSet Name="FK_tb_evaluation_tb_evaluator" Association="Self.FK_tb_evaluation_tb_evaluator">
       <End Role="tb_evaluator" EntitySet="tb_evaluator" />
       <End Role="tb_evaluation" EntitySet="tb_evaluation" />
@@ -314,10 +327,6 @@
     </AssociationSet>
     <AssociationSet Name="FK_tb_lecturer_tb_program" Association="Self.FK_tb_lecturer_tb_program">
       <End Role="tb_program" EntitySet="tb_program" />
-      <End Role="tb_lecturer" EntitySet="tb_lecturer" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tb_lecturer_tb_user" Association="Self.FK_tb_lecturer_tb_user">
-      <End Role="tb_user" EntitySet="tb_user" />
       <End Role="tb_lecturer" EntitySet="tb_lecturer" />
     </AssociationSet>
     <AssociationSet Name="FK_tb_proposal_tb_evaluator" Association="Self.FK_tb_proposal_tb_evaluator">

@@ -41,6 +41,12 @@
                                 <p class="text-uppercase text-sm">Lecturer Information</p>
                                 <div class="row">
                                     <div class="col-md-6">
+                                        <div class="form-check form-switch">
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="isCommittee" value="true">
+                                            <label class="form-check-label" for="flexSwitchCheckDefault">Committee</label>
+                                            <input type="hidden" name="isCommittee" value="false">
+                                        </div>
+
                                         <div class="form-group">
                                             <label for="example-text-input" class="form-control-label">Identification/Passport No.</label>
                                             <div class="col-md-10">
@@ -59,23 +65,24 @@
                                     </div>
 
                                     <div class="col-md-6">
-                                            <label for="example-text-input" class="form-control-label">Full Name</label>
-                                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                        <label for="example-text-input" class="form-control-label">Full Name</label>
+                                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                     </div>
 
                                     <div class="col-md-6">
                                         @Html.DropDownList("ProgramCode", null, htmlAttributes: new { @class = "form-control" })
                                         @Html.ValidationMessageFor(model => model.ProgramCode, "", new { @class = "text-danger" })
                                     </div>
+
                                 </div>
                                 <hr class="horizontal dark">
                                 <p class="text-uppercase text-sm">Contact Information</p>
                                 <div class="row">
                                     <div class="col-md-6">
-                                            <label for="example-text-input" class="form-control-label">Mobile No.</label>
-                                            @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
+                                        <label for="example-text-input" class="form-control-label">Mobile No.</label>
+                                        @Html.EditorFor(model => model.MobileNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.MobileNo, "", new { @class = "text-danger" })
                                     </div>
                                     <div class="col-md-6">
                                         <label for="example-text-input" class="form-control-label">Email</label>
