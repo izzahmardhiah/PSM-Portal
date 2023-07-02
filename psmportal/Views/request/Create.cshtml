@@ -1,0 +1,119 @@
+﻿@model psmportal.Models.ViewModels.RequestCreateViewModel
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        PSM Portal
+    </title>
+   
+</head>
+
+<body class="g-sidenav-show   bg-gray-100">
+    <div class="min-height-300 bg-primary position-absolute w-100"></div>
+    @Html.Partial("_SideNavbar")
+    <main class="main-content position-relative border-radius-lg ">
+        @Html.Partial("_TopNavbar")
+
+        <div class="container-fluid py-4">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="card">
+                            <div class="card-header pb-0">
+                                <div class="d-flex align-items-center">
+                                    <h3 class="mb-0">Supervisor Request</h3>
+                                </div>
+                            </div>
+                            <div class="card-body">
+                                <p class="text-uppercase text-sm">Supervisor List</p>
+                                <table class="table align-items-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Name</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Mobile No</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Domain</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Programme</th>
+                                            <th class="text-secondary opacity-7"></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @Html.HiddenFor(model => model.Request.StudentIC)
+                                        @foreach (var lecturer in Model.Lecturers.Where(l => l.tb_user.Role == 4))
+                                        {
+                                            <tr>
+                                                <td class="align-middle">
+                                                    <!-- Add a checkbox input for selecting the lecturer -->
+                                                    @Html.RadioButtonFor(model => model.Request.SupervisorIC, lecturer.IC, new { id = "lecturer_" + lecturer.IC })
+                                                </td>
+                                                <td>
+                                                    <div class="d-flex px-2 py-1">
+                                                        <div>
+                                                            <img src="~/Content/assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                                                        </div>
+                                                        <div class="d-flex flex-column justify-content-center">
+                                                            <h6 class="mb-0 text-sm">@lecturer.Name</h6>
+                                                            <p class="text-xs text-secondary mb-0">@lecturer.Email</p>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">@lecturer.MobileNo</p>
+                                                </td>
+                                                <td class="align-middle text-center text-sm">
+                                                    <span class="badge badge-sm @(lecturer.tb_domain.DomainID == 1 ? "bg-gradient-success" : lecturer.tb_domain.DomainID == 2 ? "bg-gradient-info" : "")">
+                                                        @lecturer.tb_domain.DomainName
+                                                    </span>
+                                                </td>
+                                                <td class="align-middle text-center">
+                                                    <span class="text-secondary text-xs font-weight-bold">@lecturer.ProgramCode</span>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+
+                                <hr class="horizontal dark">
+
+
+                                <div class="col-md-12">
+                                    <label for="example-text-input" class="form-control-label">Notes</label>
+                                    @Html.TextAreaFor(model => model.Request.Notes, new { rows = 5, @class = "form-control", placeholder = "Briefly describe yourself" })
+                                    @Html.ValidationMessageFor(model => model.Request.Notes, "", new { @class = "text-danger" })
+                                </div>
+
+
+
+
+                                <hr />
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <input type="submit" value="Submit" class="btn btn-default" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @Html.Partial("_Footer")
+        </div>
+    </main>
+</body>
+
+</html>
+

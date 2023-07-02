@@ -107,35 +107,89 @@ namespace psmportal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             tb_lecturer tb_lecturer = db.tb_lecturer.Find(id);
             if (tb_lecturer == null)
             {
                 return HttpNotFound();
             }
+
             ViewBag.Domain = new SelectList(db.tb_domain, "DomainID", "DomainName", tb_lecturer.Domain);
             ViewBag.ProgramCode = new SelectList(db.tb_program, "ProgramID", "ProgramName", tb_lecturer.ProgramCode);
             ViewBag.IC = new SelectList(db.tb_sv, "SupervisorIC", "OwnedStudentIC", tb_lecturer.IC);
+
+            // Retrieve the user's role from the tb_user table
+            var userRole = db.tb_user.SingleOrDefault(u => u.IC == tb_lecturer.IC)?.Role;
+
+            // Pass the user's role to the view
+            ViewBag.UserRole = userRole;
+
             return View(tb_lecturer);
         }
+
 
         // POST: lecturer/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit([Bind(Include = "IC,Name,ProgramCode,Domain,Email,MobileNo")] tb_lecturer tb_lecturer)
+        public ActionResult Edit([Bind(Include = "IC,Name,ProgramCode,Domain,Email,MobileNo")] tb_lecturer tb_lecturer, string MobileNo, bool isCommittee)
         {
             if (ModelState.IsValid)
             {
+                // Update the lecturer information in tb_lecturer table
                 db.Entry(tb_lecturer).State = EntityState.Modified;
                 db.SaveChanges();
+
+                // Get the user associated with the lecturer
+                tb_user user = db.tb_user.FirstOrDefault(u => u.IC == tb_lecturer.IC);
+                if (user != null)
+                {
+                    // Update the user's role based on the isCommittee flag
+                    user.Role = isCommittee ? 2 : 4; // Set role based on the value of isCommittee
+                    db.SaveChanges();
+                }
+
+                if (isCommittee)
+                {
+                    // Check if the lecturer is already a committee member
+                    var committee = db.tb_committee.FirstOrDefault(c => c.IC == tb_lecturer.IC);
+                    if (committee == null)
+                    {
+                        // Insert the committee member information in tb_committee table
+                        committee = new tb_committee
+                        {
+                            IC = tb_lecturer.IC
+                        };
+                        db.tb_committee.Add(committee);
+                        db.SaveChanges();
+                    }
+                }
+                else
+                {
+                    // Check if the lecturer is a committee member and remove the entry if exists
+                    var committee = db.tb_committee.FirstOrDefault(c => c.IC == tb_lecturer.IC);
+                    if (committee != null)
+                    {
+                        db.tb_committee.Remove(committee);
+                        db.SaveChanges();
+                    }
+                }
+
                 return RedirectToAction("Index");
             }
+
             ViewBag.Domain = new SelectList(db.tb_domain, "DomainID", "DomainName", tb_lecturer.Domain);
             ViewBag.ProgramCode = new SelectList(db.tb_program, "ProgramID", "ProgramName", tb_lecturer.ProgramCode);
             ViewBag.IC = new SelectList(db.tb_sv, "SupervisorIC", "OwnedStudentIC", tb_lecturer.IC);
+
+            // Add isCommittee value to ViewBag to maintain the switch state
+            ViewBag.IsCommittee = isCommittee;
+
             return View(tb_lecturer);
         }
+
+
 
         // GET: lecturer/Delete/5
         public ActionResult Delete(string id)

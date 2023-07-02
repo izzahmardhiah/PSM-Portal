@@ -1,0 +1,129 @@
+﻿@model IEnumerable<psmportal.Models.tb_request>
+
+@{
+    ViewBag.Title = "Index";
+}
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        PSM Portal
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+</head>
+
+<body class="g-sidenav-show   bg-gray-100">
+    <div class="min-height-300 bg-primary position-absolute w-100"></div>
+    @Html.Partial("_SideNavbar")
+    <main class="main-content position-relative border-radius-lg ">
+        @Html.Partial("_TopNavbar")
+        <div class="container-fluid py-4">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card mb-4">
+                        <div class="card-header pb-0">
+                            <div class="d-flex align-items-center">
+                                <h4 class="mb-0">Student-Supervisor Request List</h4>
+                            </div>
+                            <div class="text-end">
+                                <button id="approveBtn" class="btn btn-success me-2">Approve</button>
+                                <button id="rejectBtn" class="btn btn-danger">Reject</button>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pt-0 pb-2">
+                            <div class="table-responsive p-0">
+                                <table class="table align-items-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-secondary opacity-7"></th>
+                                            <th class="text-secondary opacity-7">Student Name</th>
+                                            <th class="text-secondary opacity-7">Program Code</th>
+                                            <th class="text-secondary opacity-7">Domain</th>
+                                            <th class="text-secondary opacity-7">Lecturer Name</th>
+                                            <th class="text-secondary opacity-7">Program Code</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach (var item in Model)
+                                        {
+                                            <tr>
+                                                <td class="align-middle">
+                                                    <input type="checkbox" name="requestIds" value="@item.RequestID">
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.tb_student.Name)</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.tb_student.ProgramCode)</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.tb_student.tb_domain.DomainName)</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.tb_lecturer.Name)</p>
+                                                </td>
+                                                <td>
+                                                    <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.tb_lecturer.ProgramCode)</p>
+                                                </td>
+                                                <td class="align-middle">
+                                                    <a href="@Url.Action("Details", "request" , new { id=item.RequestID })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Details">
+                                                        <i class="fa-sharp fa-solid fa-eye"></i>
+                                                    </a>
+                                                </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        @Html.Partial("_Footer")
+    </main>
+</body>
+
+</html>
+
+<script>
+    $(document).ready(function () {
+        $('#approveBtn').click(function () {
+            updateRequestStatus(2); // Call a function to update the status of checked requests to "Approve" (status = 2)
+        });
+
+        $('#rejectBtn').click(function () {
+            updateRequestStatus(3); // Call a function to update the status of checked requests to "Reject" (status = 3)
+        });
+
+        function updateRequestStatus(status) {
+            var requestIds = [];
+            $('input[name="requestIds"]:checked').each(function () {
+                requestIds.push($(this).val());
+            });
+
+            // Make an AJAX request to update the request status
+            $.ajax({
+                url: '@Url.Action("UpdateRequestStatus", "sv")',
+                type: 'POST',
+                data: { requestIds: requestIds, status: status },
+                success: function (result) {
+                    // Handle the success response
+                    // Reload the table or perform any other necessary actions
+                },
+                error: function (xhr, status, error) {
+                    // Handle the error response
+                }
+            });
+        }
+    });
+</script>

@@ -33,7 +33,10 @@
         <AssociationConnector Association="db_psmportalModel.FK_tb_student_tb_user" />
         <EntityTypeShape EntityType="db_psmportalModel.tb_committee" Width="1.5" PointX="5.25" PointY="10.875" />
         <AssociationConnector Association="db_psmportalModel.FK_tb_committee_tb_lecturer" />
-      </Diagram>
+        <EntityTypeShape EntityType="db_psmportalModel.tb_request" Width="1.5" PointX="15" PointY="6.375" />
+        <AssociationConnector Association="db_psmportalModel.FK_tb_request_tb_lecturer" />
+        <AssociationConnector Association="db_psmportalModel.FK_tb_request_tb_student" />
+        </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
 </edmx:Edmx>

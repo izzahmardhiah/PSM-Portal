@@ -1,0 +1,42 @@
+﻿@model psmportal.Models.tb_request
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tb_request</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Notes)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Notes)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_lecturer.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_lecturer.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_student.MatricNo)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_student.MatricNo)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.RequestID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

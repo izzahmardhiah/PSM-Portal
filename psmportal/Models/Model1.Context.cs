@@ -37,5 +37,6 @@ namespace psmportal.Models
         public virtual DbSet<tb_sv> tb_sv { get; set; }
         public virtual DbSet<tb_user> tb_user { get; set; }
         public virtual DbSet<tb_committee> tb_committee { get; set; }
+        public virtual DbSet<tb_request> tb_request { get; set; }
     }
 }

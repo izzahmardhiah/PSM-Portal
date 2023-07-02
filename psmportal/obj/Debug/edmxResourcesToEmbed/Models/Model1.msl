@@ -124,5 +124,16 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="tb_request">
+      <EntityTypeMapping TypeName="db_psmportalModel.tb_request">
+        <MappingFragment StoreEntitySet="tb_request">
+          <ScalarProperty Name="Status" ColumnName="Status" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="SupervisorIC" ColumnName="SupervisorIC" />
+          <ScalarProperty Name="StudentIC" ColumnName="StudentIC" />
+          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
   </EntityContainerMapping>
 </Mapping>

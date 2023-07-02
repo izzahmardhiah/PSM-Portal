@@ -43,6 +43,15 @@
                                 <div class="row">
                                     @Html.HiddenFor(model => model.IC)
                                     <div class="col-md-6">
+                                        <div class="form-check form-switch">
+                                            @{
+                                                bool isCommittee = ViewBag.UserRole == 2;
+                                            }
+                                            <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault" name="isCommittee" value="true" @(isCommittee ? "checked" : "")>
+                                            <label class="form-check-label" for="flexSwitchCheckDefault">Committee</label>
+                                            <input type="hidden" name="isCommittee" value="false">
+                                        </div>
+
                                         <div class="form-group">
                                             <label for="example-text-input" class="form-control-label">Full Name</label>
                                             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })

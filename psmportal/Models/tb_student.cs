@@ -14,6 +14,12 @@ namespace psmportal.Models
     
     public partial class tb_student
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public tb_student()
+        {
+            this.tb_request = new HashSet<tb_request>();
+        }
+    
         public string IC { get; set; }
         public string MatricNo { get; set; }
         public string Name { get; set; }
@@ -31,5 +37,7 @@ namespace psmportal.Models
         public virtual tb_proposal tb_proposal { get; set; }
         public virtual tb_sv tb_sv { get; set; }
         public virtual tb_user tb_user { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_request> tb_request { get; set; }
     }
 }

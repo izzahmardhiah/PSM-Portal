@@ -74,6 +74,16 @@
     <Property Name="Evaluator2" Type="varchar" MaxLength="50" />
     <Property Name="StudentIC" Type="varchar" MaxLength="50" />
   </EntityType>
+  <EntityType Name="tb_request">
+    <Key>
+      <PropertyRef Name="RequestID" />
+    </Key>
+    <Property Name="RequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="StudentIC" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="SupervisorIC" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Notes" Type="text" />
+    <Property Name="Status" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="tb_status">
     <Key>
       <PropertyRef Name="StatusID" />
@@ -198,6 +208,18 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="FK_tb_lecturer_tb_user">
+    <End Role="tb_user" Type="Self.tb_user" Multiplicity="1" />
+    <End Role="tb_lecturer" Type="Self.tb_lecturer" Multiplicity="0..1" />
+    <ReferentialConstraint>
+      <Principal Role="tb_user">
+        <PropertyRef Name="IC" />
+      </Principal>
+      <Dependent Role="tb_lecturer">
+        <PropertyRef Name="IC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
   <Association Name="FK_tb_proposal_tb_evaluator">
     <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
@@ -210,6 +232,30 @@
       </Principal>
       <Dependent Role="tb_proposal">
         <PropertyRef Name="Evaluator1" />
+        <PropertyRef Name="StudentIC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_request_tb_lecturer">
+    <End Role="tb_lecturer" Type="Self.tb_lecturer" Multiplicity="1" />
+    <End Role="tb_request" Type="Self.tb_request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_lecturer">
+        <PropertyRef Name="IC" />
+      </Principal>
+      <Dependent Role="tb_request">
+        <PropertyRef Name="SupervisorIC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_request_tb_student">
+    <End Role="tb_student" Type="Self.tb_student" Multiplicity="1" />
+    <End Role="tb_request" Type="Self.tb_request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_student">
+        <PropertyRef Name="IC" />
+      </Principal>
+      <Dependent Role="tb_request">
         <PropertyRef Name="StudentIC" />
       </Dependent>
     </ReferentialConstraint>
@@ -301,6 +347,7 @@
     <EntitySet Name="tb_lecturer" EntityType="Self.tb_lecturer" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_program" EntityType="Self.tb_program" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_proposal" EntityType="Self.tb_proposal" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="tb_request" EntityType="Self.tb_request" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_status" EntityType="Self.tb_status" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_student" EntityType="Self.tb_student" Schema="dbo" store:Type="Tables" />
     <EntitySet Name="tb_sv" EntityType="Self.tb_sv" Schema="dbo" store:Type="Tables" />
@@ -329,9 +376,21 @@
       <End Role="tb_program" EntitySet="tb_program" />
       <End Role="tb_lecturer" EntitySet="tb_lecturer" />
     </AssociationSet>
+    <AssociationSet Name="FK_tb_lecturer_tb_user" Association="Self.FK_tb_lecturer_tb_user">
+      <End Role="tb_user" EntitySet="tb_user" />
+      <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+    </AssociationSet>
     <AssociationSet Name="FK_tb_proposal_tb_evaluator" Association="Self.FK_tb_proposal_tb_evaluator">
       <End Role="tb_evaluator" EntitySet="tb_evaluator" />
       <End Role="tb_proposal" EntitySet="tb_proposal" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_request_tb_lecturer" Association="Self.FK_tb_request_tb_lecturer">
+      <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+      <End Role="tb_request" EntitySet="tb_request" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_request_tb_student" Association="Self.FK_tb_request_tb_student">
+      <End Role="tb_student" EntitySet="tb_student" />
+      <End Role="tb_request" EntitySet="tb_request" />
     </AssociationSet>
     <AssociationSet Name="FK_tb_student_tb_domain" Association="Self.FK_tb_student_tb_domain">
       <End Role="tb_domain" EntitySet="tb_domain" />

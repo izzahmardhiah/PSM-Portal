@@ -16,8 +16,16 @@
                     <span class="nav-link-text ms-1">Dashboard</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="@Url.Action("Index", "lecturer")">
+                    <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
+                        <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                    </div>
+                    <span class="nav-link-text ms-1">Lecturer List</span>
+                </a>
+            </li>
 
-            @if (Session["Role"] != null && Session["Role"].ToString() == "2")
+            @if (Session["Role"] != null && Session["Role"].ToString() == "2") // committee
             {
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("Index", "student")">
@@ -28,11 +36,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "lecturer")">
+                    <a class="nav-link" href="@Url.Action("Index", "request")">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
+                            <i class="ni ni-credit-card text-success text-sm opacity-10"></i>
                         </div>
-                        <span class="nav-link-text ms-1">Lecturer List</span>
+                        <span class="nav-link-text ms-1">Supervisor Request</span>
                     </a>
                 </li>
             }
@@ -44,14 +52,14 @@
                     <span class="nav-link-text ms-1">Evaluator List</span>
                 </a>
             </li>
-            @if (Session["Role"] != null && Session["Role"].ToString() == "3")
+            @if (Session["Role"] != null && Session["Role"].ToString() == "3") //student
             {
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("Index", "sv")">
                         <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
                             <i class="ni ni-app text-info text-sm opacity-10"></i>
                         </div>
-                        <span class="nav-link-text ms-1">Supervisor List</span>
+                        <span class="nav-link-text ms-1">Supervisor</span>
                     </a>
                 </li>
 
@@ -64,7 +72,7 @@
                     </a>
                 </li>
             }
-            @if (Session["Role"] != null && Session["Role"].ToString() == "1")
+            @if (Session["Role"] != null && Session["Role"].ToString() == "1") //admin
             {
                 <li class="nav-item">
                     <a class="nav-link" href="@Url.Action("Index", "program")">
@@ -80,14 +88,6 @@
                             <i class="ni ni-app text-info text-sm opacity-10"></i>
                         </div>
                         <span class="nav-link-text ms-1">Committee List</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "lecturer")">
-                        <div class="icon icon-shape icon-sm border-radius-md text-center me-2 d-flex align-items-center justify-content-center">
-                            <i class="ni ni-calendar-grid-58 text-warning text-sm opacity-10"></i>
-                        </div>
-                        <span class="nav-link-text ms-1">Lecturer List</span>
                     </a>
                 </li>
             }

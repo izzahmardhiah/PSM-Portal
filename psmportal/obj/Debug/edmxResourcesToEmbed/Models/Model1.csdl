@@ -62,6 +62,7 @@
     <NavigationProperty Name="tb_sv" Relationship="Self.FK_tb_sv_tb_lecturer" FromRole="tb_lecturer" ToRole="tb_sv" />
     <NavigationProperty Name="tb_user" Relationship="db_psmportalModel.FK_tb_lecturer_tb_user" FromRole="tb_lecturer" ToRole="tb_user" />
     <NavigationProperty Name="tb_committee" Relationship="db_psmportalModel.FK_tb_committee_tb_lecturer" FromRole="tb_lecturer" ToRole="tb_committee" />
+    <NavigationProperty Name="tb_request" Relationship="db_psmportalModel.FK_tb_request_tb_lecturer" FromRole="tb_lecturer" ToRole="tb_request" />
   </EntityType>
   <EntityType Name="tb_program">
     <Key>
@@ -117,6 +118,7 @@
     <NavigationProperty Name="tb_proposal" Relationship="Self.FK_tb_student_tb_proposal" FromRole="tb_student" ToRole="tb_proposal" />
     <NavigationProperty Name="tb_sv" Relationship="Self.FK_tb_student_tb_sv" FromRole="tb_student" ToRole="tb_sv" />
     <NavigationProperty Name="tb_user" Relationship="db_psmportalModel.FK_tb_student_tb_user" FromRole="tb_student" ToRole="tb_user" />
+    <NavigationProperty Name="tb_request" Relationship="db_psmportalModel.FK_tb_request_tb_student" FromRole="tb_student" ToRole="tb_request" />
   </EntityType>
   <EntityType Name="tb_sv">
     <Key>
@@ -366,6 +368,15 @@
       <End Role="tb_lecturer" EntitySet="tb_lecturer" />
       <End Role="tb_committee" EntitySet="tb_committee" />
     </AssociationSet>
+    <EntitySet Name="tb_request" EntityType="db_psmportalModel.tb_request" />
+    <AssociationSet Name="FK_tb_request_tb_lecturer" Association="db_psmportalModel.FK_tb_request_tb_lecturer">
+      <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+      <End Role="tb_request" EntitySet="tb_request" />
+    </AssociationSet>
+    <AssociationSet Name="FK_tb_request_tb_student" Association="db_psmportalModel.FK_tb_request_tb_student">
+      <End Role="tb_student" EntitySet="tb_student" />
+      <End Role="tb_request" EntitySet="tb_request" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="tb_user">
     <Key>
@@ -421,6 +432,42 @@
       </Principal>
       <Dependent Role="tb_committee">
         <PropertyRef Name="IC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityType Name="tb_request">
+    <Key>
+      <PropertyRef Name="RequestID" />
+    </Key>
+    <Property Name="RequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="StudentIC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="SupervisorIC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+    <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Status" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="tb_lecturer" Relationship="db_psmportalModel.FK_tb_request_tb_lecturer" FromRole="tb_request" ToRole="tb_lecturer" />
+    <NavigationProperty Name="tb_student" Relationship="db_psmportalModel.FK_tb_request_tb_student" FromRole="tb_request" ToRole="tb_student" />
+  </EntityType>
+  <Association Name="FK_tb_request_tb_lecturer">
+    <End Type="db_psmportalModel.tb_lecturer" Role="tb_lecturer" Multiplicity="1" />
+    <End Type="db_psmportalModel.tb_request" Role="tb_request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_lecturer">
+        <PropertyRef Name="IC" />
+      </Principal>
+      <Dependent Role="tb_request">
+        <PropertyRef Name="SupervisorIC" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_tb_request_tb_student">
+    <End Type="db_psmportalModel.tb_student" Role="tb_student" Multiplicity="1" />
+    <End Type="db_psmportalModel.tb_request" Role="tb_request" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tb_student">
+        <PropertyRef Name="IC" />
+      </Principal>
+      <Dependent Role="tb_request">
+        <PropertyRef Name="StudentIC" />
       </Dependent>
     </ReferentialConstraint>
   </Association>

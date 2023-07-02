@@ -79,6 +79,16 @@
           <Property Name="Evaluator2" Type="varchar" MaxLength="50" />
           <Property Name="StudentIC" Type="varchar" MaxLength="50" />
         </EntityType>
+        <EntityType Name="tb_request">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="StudentIC" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="SupervisorIC" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Notes" Type="text" />
+          <Property Name="Status" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="tb_status">
           <Key>
             <PropertyRef Name="StatusID" />
@@ -203,6 +213,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_tb_lecturer_tb_user">
+          <End Role="tb_user" Type="Self.tb_user" Multiplicity="1" />
+          <End Role="tb_lecturer" Type="Self.tb_lecturer" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="tb_user">
+              <PropertyRef Name="IC" />
+            </Principal>
+            <Dependent Role="tb_lecturer">
+              <PropertyRef Name="IC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_tb_proposal_tb_evaluator">
           <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="0..1">
             <OnDelete Action="Cascade" />
@@ -215,6 +237,30 @@
             </Principal>
             <Dependent Role="tb_proposal">
               <PropertyRef Name="Evaluator1" />
+              <PropertyRef Name="StudentIC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_request_tb_lecturer">
+          <End Role="tb_lecturer" Type="Self.tb_lecturer" Multiplicity="1" />
+          <End Role="tb_request" Type="Self.tb_request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_lecturer">
+              <PropertyRef Name="IC" />
+            </Principal>
+            <Dependent Role="tb_request">
+              <PropertyRef Name="SupervisorIC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_request_tb_student">
+          <End Role="tb_student" Type="Self.tb_student" Multiplicity="1" />
+          <End Role="tb_request" Type="Self.tb_request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_student">
+              <PropertyRef Name="IC" />
+            </Principal>
+            <Dependent Role="tb_request">
               <PropertyRef Name="StudentIC" />
             </Dependent>
           </ReferentialConstraint>
@@ -306,6 +352,7 @@
           <EntitySet Name="tb_lecturer" EntityType="Self.tb_lecturer" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_program" EntityType="Self.tb_program" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_proposal" EntityType="Self.tb_proposal" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="tb_request" EntityType="Self.tb_request" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_status" EntityType="Self.tb_status" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_student" EntityType="Self.tb_student" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="tb_sv" EntityType="Self.tb_sv" Schema="dbo" store:Type="Tables" />
@@ -334,9 +381,21 @@
             <End Role="tb_program" EntitySet="tb_program" />
             <End Role="tb_lecturer" EntitySet="tb_lecturer" />
           </AssociationSet>
+          <AssociationSet Name="FK_tb_lecturer_tb_user" Association="Self.FK_tb_lecturer_tb_user">
+            <End Role="tb_user" EntitySet="tb_user" />
+            <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+          </AssociationSet>
           <AssociationSet Name="FK_tb_proposal_tb_evaluator" Association="Self.FK_tb_proposal_tb_evaluator">
             <End Role="tb_evaluator" EntitySet="tb_evaluator" />
             <End Role="tb_proposal" EntitySet="tb_proposal" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_request_tb_lecturer" Association="Self.FK_tb_request_tb_lecturer">
+            <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+            <End Role="tb_request" EntitySet="tb_request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_request_tb_student" Association="Self.FK_tb_request_tb_student">
+            <End Role="tb_student" EntitySet="tb_student" />
+            <End Role="tb_request" EntitySet="tb_request" />
           </AssociationSet>
           <AssociationSet Name="FK_tb_student_tb_domain" Association="Self.FK_tb_student_tb_domain">
             <End Role="tb_domain" EntitySet="tb_domain" />
@@ -429,6 +488,7 @@
           <NavigationProperty Name="tb_sv" Relationship="Self.FK_tb_sv_tb_lecturer" FromRole="tb_lecturer" ToRole="tb_sv" />
           <NavigationProperty Name="tb_user" Relationship="db_psmportalModel.FK_tb_lecturer_tb_user" FromRole="tb_lecturer" ToRole="tb_user" />
           <NavigationProperty Name="tb_committee" Relationship="db_psmportalModel.FK_tb_committee_tb_lecturer" FromRole="tb_lecturer" ToRole="tb_committee" />
+          <NavigationProperty Name="tb_request" Relationship="db_psmportalModel.FK_tb_request_tb_lecturer" FromRole="tb_lecturer" ToRole="tb_request" />
         </EntityType>
         <EntityType Name="tb_program">
           <Key>
@@ -484,6 +544,7 @@
           <NavigationProperty Name="tb_proposal" Relationship="Self.FK_tb_student_tb_proposal" FromRole="tb_student" ToRole="tb_proposal" />
           <NavigationProperty Name="tb_sv" Relationship="Self.FK_tb_student_tb_sv" FromRole="tb_student" ToRole="tb_sv" />
           <NavigationProperty Name="tb_user" Relationship="db_psmportalModel.FK_tb_student_tb_user" FromRole="tb_student" ToRole="tb_user" />
+          <NavigationProperty Name="tb_request" Relationship="db_psmportalModel.FK_tb_request_tb_student" FromRole="tb_student" ToRole="tb_request" />
         </EntityType>
         <EntityType Name="tb_sv">
           <Key>
@@ -733,7 +794,16 @@
             <End Role="tb_lecturer" EntitySet="tb_lecturer" />
             <End Role="tb_committee" EntitySet="tb_committee" />
           </AssociationSet>
-        </EntityContainer>
+          <EntitySet Name="tb_request" EntityType="db_psmportalModel.tb_request" />
+          <AssociationSet Name="FK_tb_request_tb_lecturer" Association="db_psmportalModel.FK_tb_request_tb_lecturer">
+            <End Role="tb_lecturer" EntitySet="tb_lecturer" />
+            <End Role="tb_request" EntitySet="tb_request" />
+          </AssociationSet>
+          <AssociationSet Name="FK_tb_request_tb_student" Association="db_psmportalModel.FK_tb_request_tb_student">
+            <End Role="tb_student" EntitySet="tb_student" />
+            <End Role="tb_request" EntitySet="tb_request" />
+          </AssociationSet>
+          </EntityContainer>
         <EntityType Name="tb_user">
           <Key>
             <PropertyRef Name="IC" />
@@ -791,7 +861,43 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-      </Schema>
+        <EntityType Name="tb_request">
+          <Key>
+            <PropertyRef Name="RequestID" />
+          </Key>
+          <Property Name="RequestID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="StudentIC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SupervisorIC" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Notes" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="Status" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="tb_lecturer" Relationship="db_psmportalModel.FK_tb_request_tb_lecturer" FromRole="tb_request" ToRole="tb_lecturer" />
+          <NavigationProperty Name="tb_student" Relationship="db_psmportalModel.FK_tb_request_tb_student" FromRole="tb_request" ToRole="tb_student" />
+        </EntityType>
+        <Association Name="FK_tb_request_tb_lecturer">
+          <End Type="db_psmportalModel.tb_lecturer" Role="tb_lecturer" Multiplicity="1" />
+          <End Type="db_psmportalModel.tb_request" Role="tb_request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_lecturer">
+              <PropertyRef Name="IC" />
+            </Principal>
+            <Dependent Role="tb_request">
+              <PropertyRef Name="SupervisorIC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_tb_request_tb_student">
+          <End Type="db_psmportalModel.tb_student" Role="tb_student" Multiplicity="1" />
+          <End Type="db_psmportalModel.tb_request" Role="tb_request" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="tb_student">
+              <PropertyRef Name="IC" />
+            </Principal>
+            <Dependent Role="tb_request">
+              <PropertyRef Name="StudentIC" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>
@@ -917,6 +1023,17 @@
             <EntityTypeMapping TypeName="db_psmportalModel.tb_committee">
               <MappingFragment StoreEntitySet="tb_committee">
                 <ScalarProperty Name="IC" ColumnName="IC" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="tb_request">
+            <EntityTypeMapping TypeName="db_psmportalModel.tb_request">
+              <MappingFragment StoreEntitySet="tb_request">
+                <ScalarProperty Name="Status" ColumnName="Status" />
+                <ScalarProperty Name="Notes" ColumnName="Notes" />
+                <ScalarProperty Name="SupervisorIC" ColumnName="SupervisorIC" />
+                <ScalarProperty Name="StudentIC" ColumnName="StudentIC" />
+                <ScalarProperty Name="RequestID" ColumnName="RequestID" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

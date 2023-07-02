@@ -33,14 +33,16 @@
                     <div class="card-header pb-0">
                         <div class="d-flex align-items-center">
                             <h4 class="mb-0">Lecturer List</h4>
-                            <button class="btn btn-icon btn-3 btn bg-gradient-secondary ms-auto" type="button">
-                                <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
-                                <span class="btn-inner--text">
-                                    @Html.ActionLink("Create New", "Create")
-                                </span>
-                            </button>
-
-                        </div>
+                            @if (Session["Role"] != null && Session["Role"].ToString() == "1")
+                            {
+                                <button class="btn btn-icon btn-3 btn bg-gradient-secondary ms-auto" type="button">
+                                    <span class="btn-inner--icon"><i class="ni ni-fat-add"></i></span>
+                                    <span class="btn-inner--text">
+                                        @Html.ActionLink("Create New", "Create")
+                                    </span>
+                                </button>
+                            }
+                            </div>
                     </div>
                     <div class="card-body px-0 pt-0 pb-2">
                         <div class="table-responsive p-0">
@@ -81,17 +83,26 @@
                                             <td class="align-middle text-center">
                                                 <span class="text-secondary text-xs font-weight-bold">@Html.DisplayFor(modelItem => item.tb_program.ProgramName)</span>
                                             </td>
-                                            <td class="align-middle">
-                                                <a href="@Url.Action("Edit", "lecturer" , new { id=item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                    <i class="fa-sharp fa-solid fa-pencil fa-lg" style="color: #ffcb3d;"></i>
-                                                </a>
-                                                <a href="@Url.Action("Details", "lecturer" , new { id=item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Details user">
-                                                    <i class="fa-sharp fa-solid fa-eye fa-lg" style="color: #2d5eb4;"></i>
-                                                </a>
-                                                <a href="@Url.Action("Delete", "lecturer" , new { id=item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
-                                                    <i class="fa-sharp fa-solid fa-trash fa-lg" style="color: #ff5252;"></i>
-                                                </a>
-                                            </td>
+                                            @if (Session["Role"] != null && Session["Role"].ToString() == "1")
+                                            {
+                                                <td class="align-middle">
+                                                    <a href="@Url.Action("Edit", "lecturer", new { id = item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                                        <i class="fa-sharp fa-solid fa-pencil fa-lg" style="color: #ffcb3d;"></i>
+                                                    </a>
+                                                    <a href="@Url.Action("Delete", "lecturer", new { id = item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                                                        <i class="fa-sharp fa-solid fa-trash fa-lg" style="color: #ff5252;"></i>
+                                                    </a>
+                                                </td>
+                                            }
+                                            @if (Session["Role"] != null && Session["Role"].ToString() == "3")
+                                            {
+                                                <td class="align-middle">
+                                                    <a href="@Url.Action("Create", "request")" class="btn btn-dark btn-icon align-items-center btn-sm">
+                                                        <span class="btn-inner--icon me-2"><i class="fa-solid fa-file-signature" style="color: #ffffff;"></i></span>
+                                                        <span class="btn-inner--text">Request</span>
+                                                    </a>
+                                                </td>
+                                            }
                                         </tr>
                                     }
                                 </tbody>

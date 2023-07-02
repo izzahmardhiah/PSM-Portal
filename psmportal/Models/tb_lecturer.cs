@@ -18,6 +18,7 @@ namespace psmportal.Models
         public tb_lecturer()
         {
             this.tb_evaluator = new HashSet<tb_evaluator>();
+            this.tb_request = new HashSet<tb_request>();
         }
     
         public string IC { get; set; }
@@ -34,5 +35,7 @@ namespace psmportal.Models
         public virtual tb_sv tb_sv { get; set; }
         public virtual tb_user tb_user { get; set; }
         public virtual tb_committee tb_committee { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_request> tb_request { get; set; }
     }
 }
