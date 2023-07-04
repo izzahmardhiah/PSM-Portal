@@ -1,34 +1,90 @@
-﻿@model psmportal.Models.tb_sv
+﻿@model psmportal.Models.tb_student
 
 @{
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+@{
+    ViewBag.Title = "Index";
+}
 
-<div>
-    <h4>tb_sv</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.OwnedStudentIC)
-        </dt>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-        <dd>
-            @Html.DisplayFor(model => model.OwnedStudentIC)
-        </dd>
+<!DOCTYPE html>
+<html lang="en">
 
-        <dt>
-            @Html.DisplayNameFor(model => model.tb_lecturer.Name)
-        </dt>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        PSM Portal
+    </title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-        <dd>
-            @Html.DisplayFor(model => model.tb_lecturer.Name)
-        </dd>
+</head>
 
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.SupervisorIC }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+<body class="g-sidenav-show   bg-gray-100">
+    <div class="min-height-300 bg-primary position-absolute w-100"></div>
+    @Html.Partial("_SideNavbar")
+    <main class="main-content position-relative border-radius-lg ">
+        @Html.Partial("_TopNavbar")
+        <div class="container-fluid py-4">
+            <div class="row">
+                @if (string.IsNullOrEmpty(Model.Supervisor))
+                {
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body text-center">
+                                <h5 class="card-title">No Supervisor</h5>
+                                <p class="card-text">You don't have a supervisor assigned yet.</p>
+                                <a href="@Url.Action("Create", "request")" class="btn btn-primary">Request Supervisor</a>
+                            </div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-6">
+                        <div class="card card-profile">
+                            <img src="~/Content/assets/img/utm.jpg" alt="Image placeholder" class="card-img-top">
+                            <div class="row justify-content-center">
+                                <div class="col-4 col-lg-4 order-lg-2">
+                                    <div class="mt-n4 mt-lg-n6 mb-4 mb-lg-0">
+                                        <a href="javascript:;">
+                                            <img src="~/Content/assets/img/team-2.jpg" class="rounded-circle img-fluid border border-2 border-white">
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-header text-center border-0 pt-0 pt-lg-2 pb-4 pb-lg-3">
+                                <div class="d-flex justify-content-between">
+                                    <a href="@Url.Action("GenerateAgreement", "sv")" class="btn btn-sm btn-info mb-0 d-none d-lg-block" target="_blank">Agreement</a>
+                                    <a href="javascript:;" class="btn btn-sm btn-dark float-right mb-0 d-none d-lg-block">Message</a>
+                                </div>
+                            </div>
+                            <div class="card-body pt-0">
+                                <div class="text-center mt-4">
+                                    <div>
+                                        <i class="ni education_hat mr-2"></i>Supervisor
+                                    </div>
+                                    <h5>
+                                        @Html.DisplayFor(model => model.tb_sv.tb_lecturer.Name)
+                                    </h5>
+                                    <div class="h6 font-weight-300">
+                                        @Html.DisplayFor(model => model.tb_sv.tb_lecturer.ProgramCode)
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+        @Html.Partial("_Footer")
+    </main>
+</body>
+
+</html>

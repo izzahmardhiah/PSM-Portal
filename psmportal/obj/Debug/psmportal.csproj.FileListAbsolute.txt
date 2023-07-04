@@ -63,3 +63,17 @@ C:\Users\User\source\repos\psmportal\obj\Debug\psmportal.csproj.CoreCompileInput
 C:\Users\User\source\repos\psmportal\obj\Debug\psmportal.csproj.CopyComplete
 C:\Users\User\source\repos\psmportal\obj\Debug\psmportal.dll
 C:\Users\User\source\repos\psmportal\obj\Debug\psmportal.pdb
+C:\Users\User\source\repos\psmportal\bin\Microsoft.Bcl.AsyncInterfaces.dll
+C:\Users\User\source\repos\psmportal\bin\Select.HtmlToPdf.dll
+C:\Users\User\source\repos\psmportal\bin\System.Buffers.dll
+C:\Users\User\source\repos\psmportal\bin\System.Numerics.Vectors.dll
+C:\Users\User\source\repos\psmportal\bin\System.Runtime.CompilerServices.Unsafe.dll
+C:\Users\User\source\repos\psmportal\bin\System.Threading.Tasks.Extensions.dll
+C:\Users\User\source\repos\psmportal\bin\Microsoft.Bcl.AsyncInterfaces.xml
+C:\Users\User\source\repos\psmportal\bin\Select.HtmlToPdf.xml
+C:\Users\User\source\repos\psmportal\bin\System.Buffers.xml
+C:\Users\User\source\repos\psmportal\bin\System.Numerics.Vectors.xml
+C:\Users\User\source\repos\psmportal\bin\System.Runtime.CompilerServices.Unsafe.xml
+C:\Users\User\source\repos\psmportal\bin\System.Threading.Tasks.Extensions.xml
+C:\Users\User\source\repos\psmportal\bin\Select.Html.dep
+C:\Users\User\source\repos\psmportal\bin\Rotativa.dll

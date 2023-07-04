@@ -140,18 +140,39 @@ namespace psmportal.Controllers
         {
             if (requestIds != null && requestIds.Length > 0)
             {
-                var requestsToUpdate = db.tb_request.Where(r => requestIds.Contains(r.RequestID));
+                var requestsToUpdate = db.tb_request.Include("tb_student").Where(r => requestIds.Contains(r.RequestID));
+
                 foreach (var request in requestsToUpdate)
                 {
                     request.Status = status;
+
+                    if (status == 2)
+                    {
+                        // Update Supervisor column in tb_student
+                        request.tb_student.Supervisor = request.SupervisorIC;
+
+                        // Insert a new row in tb_sv
+                        tb_sv newSvRow = new tb_sv()
+                        {
+                            SupervisorIC = request.SupervisorIC,
+                            OwnedStudentIC = request.StudentIC
+                        };
+
+                        db.tb_sv.Add(newSvRow);
+                    }
                 }
 
                 db.SaveChanges();
-                return Json(new { success = true });
+
+                // Create a success message
+                string message = (status == 2) ? "Requests approved successfully." : "Requests rejected successfully.";
+
+                return Json(new { success = true, message = message });
             }
 
-            return Json(new { success = false });
+            return Json(new { success = false, message = "No requests selected." });
         }
+
 
     }
 }

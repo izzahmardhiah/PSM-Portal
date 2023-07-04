@@ -52,7 +52,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var item in Model)
+                                        @foreach (var item in Model.Where(m => m.Status == 1))
                                         {
                                             <tr>
                                                 <td class="align-middle">
@@ -82,6 +82,7 @@
                                         }
                                     </tbody>
                                 </table>
+
                             </div>
                         </div>
                     </div>
@@ -94,6 +95,7 @@
 </body>
 
 </html>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 <script>
     $(document).ready(function () {
@@ -107,23 +109,35 @@
 
         function updateRequestStatus(status) {
             var requestIds = [];
-            $('input[name="requestIds"]:checked').each(function () {
-                requestIds.push($(this).val());
+
+            // Get the selected request ids
+            $('input[type="checkbox"]:checked').each(function () {
+                requestIds.push(parseInt($(this).val()));
             });
 
-            // Make an AJAX request to update the request status
+            // AJAX request to update request status
             $.ajax({
-                url: '@Url.Action("UpdateRequestStatus", "sv")',
+                url: '/request/UpdateRequestStatus',
                 type: 'POST',
                 data: { requestIds: requestIds, status: status },
-                success: function (result) {
-                    // Handle the success response
-                    // Reload the table or perform any other necessary actions
+                success: function (response) {
+                    if (response.success) {
+                        // Show success message
+                        alert(response.message);
+
+                        // Perform any additional actions or refresh the page as needed
+
+                    } else {
+                        // Show error message
+                        alert('Error: ' + response.message);
+                    }
                 },
-                error: function (xhr, status, error) {
-                    // Handle the error response
+                error: function () {
+                    // Show error message
+                    alert('An error occurred while updating the request status.');
                 }
             });
         }
     });
 </script>
+
