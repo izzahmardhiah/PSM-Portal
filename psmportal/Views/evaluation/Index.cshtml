@@ -1,0 +1,57 @@
+﻿@model IEnumerable<psmportal.Models.tb_evaluation>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.EvaluationComment)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.EvaluationMarks)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tb_evaluator.EvaluatorIC)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tb_proposal.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.tb_status.StatusName)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.EvaluationComment)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.EvaluationMarks)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tb_evaluator.EvaluatorIC)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tb_proposal.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.tb_status.StatusName)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.EvaluationID }) |
+            @Html.ActionLink("Details", "Details", new { id=item.EvaluationID }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.EvaluationID })
+        </td>
+    </tr>
+}
+
+</table>

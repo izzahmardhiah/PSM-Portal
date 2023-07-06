@@ -14,7 +14,7 @@ namespace psmportal.Models
     
     public partial class tb_evaluation
     {
-        public string EvaluationID { get; set; }
+        public int EvaluationID { get; set; }
         public string EvaluatorIC { get; set; }
         public string StudentIC { get; set; }
         public string ProposalID { get; set; }
@@ -22,8 +22,7 @@ namespace psmportal.Models
         public Nullable<int> EvaluationMarks { get; set; }
         public Nullable<int> EvaluationStatus { get; set; }
     
-        public virtual tb_evaluator tb_evaluator { get; set; }
-        public virtual tb_proposal tb_proposal { get; set; }
         public virtual tb_status tb_status { get; set; }
+        public virtual tb_proposal tb_proposal { get; set; }
     }
 }

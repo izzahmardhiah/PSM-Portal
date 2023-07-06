@@ -43,10 +43,9 @@
                                 <table class="table align-items-center mb-0">
                                     <thead>
                                         <tr>
-                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Status</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Proposal ID</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Title</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date Uploaded</th>
-                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Student Name</th>
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
                                     </thead>
@@ -55,34 +54,80 @@
                                         {
                                             <tr>
                                                 <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div>
-                                                            <img src="~/Content/assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
-                                                        </div>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">@Html.DisplayFor(modelItem => item.Title)</h6>                                                        </div>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">@Html.DisplayFor(modelItem => item.ProposalID)</h6>
                                                     </div>
                                                 </td>
                                                 <td>
-                                                    <p class="text-xs font-weight-bold mb-0"></p>
+                                                    <div class="d-flex flex-column justify-content-center">
+                                                        <h6 class="mb-0 text-sm">@Html.DisplayFor(modelItem => item.Title)</h6>
+                                                    </div>
                                                 </td>
                                                 <td class="align-middle text-center text-sm">
                                                     <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.DateUploaded)</p>
                                                 </td>
-
-                                                <td class="align-middle text-center">
-                                                    <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.StudentIC)</p>
-                                                </td>
                                                 <td class="align-middle">
-                                                    <a href="@Url.Action("Edit", "lecturer" , new { id=item.ProposalID })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                        <i class="fa-sharp fa-solid fa-pencil fa-lg" style="color: #ffcb3d;"></i>
-                                                    </a>
-                                                    <a href="@Url.Action("Details", "lecturer" , new { id=item.ProposalID })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Details user">
+                                                    @if (Session["Role"] != null && Session["Role"].ToString() == "2") // committee
+                                                    {
+                                                        @*assign evaluator*@
+                                                        <a href="#" onclick="showModal('@item.ProposalID')">
+                                                            <i class="fa-solid fa-user-group"></i>
+                                                        </a>
+                                                    }
+
+                                                    @*View proposal*@
+                                                    <a href="@Url.Action("Details", "proposal", new { id = item.ProposalID })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Details Proposal">
                                                         <i class="fa-sharp fa-solid fa-eye fa-lg" style="color: #2d5eb4;"></i>
                                                     </a>
-                                                    <a href="@Url.Action("Delete", "lecturer" , new { id=item.ProposalID })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
-                                                        <i class="fa-sharp fa-solid fa-trash fa-lg" style="color: #ff5252;"></i>
-                                                    </a>
+
+                                                    @if (Session["Role"] != null && Session["Role"].ToString() == "3") // student
+                                                    {
+                                                        <a href="@Url.Action("Edit", "proposal", new { id = item.ProposalID })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit Proposal">
+                                                            <i class="fa-sharp fa-solid fa-pencil fa-lg" style="color: #ffcb3d;"></i>
+                                                        </a>
+
+                                                        <a href="@Url.Action("Delete", "proposal", new { id = item.ProposalID })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete Proposal">
+                                                            <i class="fa-sharp fa-solid fa-trash fa-lg" style="color: #ff5252;"></i>
+                                                        </a>
+                                                    }
+
+                                                    @if (Session["Role"] != null && Session["Role"].ToString() == "4") // supervisor
+                                                    {
+                                                        <a href="@Url.Action("Edit", "proposal", new { id = item.ProposalID })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit Proposal">
+                                                            <i class="fa-solid fa-comment-dots fa-lg style="color: #ffcb3d;""></i>
+                                                        </a>
+                                                    }
+                                                    <!-- Modal -->
+                                                    <div class="modal fade assignEvaluatorModal" id="assignEvaluatorModal-@item.ProposalID" tabindex="-1" role="dialog" aria-labelledby="assignEvaluatorModalLabel-@item.ProposalID" aria-hidden="true">
+                                                        <div class="modal-dialog" role="document">
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <h5 class="modal-title" id="assignEvaluatorModalLabel">Assign Evaluator</h5>
+                                                                </div>
+                                                                <div class="modal-body">
+                                                                    <form id="assignEvaluatorForm-@item.ProposalID" action="@Url.Action("UpdateEvaluators", "Proposal")" method="post">
+                                                                        <label for="example-text-input" class="form-control-label">Evaluator #1:</label>
+                                                                        @Html.DropDownList("Evaluator1", null, "-- Select Evaluator --", htmlAttributes: new { @class = "form-select" })
+                                                                        @Html.ValidationMessageFor(model => item.Evaluator1)
+
+                                                                        <label for="example-text-input" class="form-control-label">Evaluator #2:</label>
+                                                                        @Html.DropDownList("Evaluator2", null, "-- Select Evaluator --", htmlAttributes: new { @class = "form-select" })
+                                                                        @Html.ValidationMessageFor(model => item.Evaluator2)
+
+                                                                        <input type="hidden" name="proposalID" value="@item.ProposalID" />
+                                                                        <input type="hidden" name="evaluator1" value="@item.Evaluator1" />
+                                                                        <input type="hidden" name="evaluator2" value="@item.Evaluator2" />
+                                                                    </form>
+                                                                </div>
+
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                                    <button type="submit" form="assignEvaluatorForm-@item.ProposalID" class="btn btn-primary">Save Changes</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                 </td>
                                             </tr>
                                         }
@@ -99,3 +144,11 @@
 </body>
 
 </html>
+<script>
+    function showModal(proposalID) {
+        var modalId = "#assignEvaluatorModal-" + proposalID;
+        $(modalId).modal('show');
+    }
+</script>
+
+

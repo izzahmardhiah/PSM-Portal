@@ -26,7 +26,7 @@
         @Html.Partial("_TopNavbar")
 
         <div class="container-fluid py-4">
-            @using (Html.BeginForm())
+            @using (Html.BeginForm("Create", "proposal", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 @Html.AntiForgeryToken()
                 <div class="row">
@@ -45,16 +45,18 @@
                                     @Html.ValidationMessageFor(model => model.ProposalID, "", new { @class = "text-danger" })
                                 </div>
 
+
                                 <div class="col-md-6">
                                     <label for="example-text-input" class="form-control-label">Title</label>
                                     <textarea name="Title" class="form-control" rows="4"></textarea>
                                     @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
                                 </div>
                                 <hr />
-                                <div class="col-md-6">
-                                    <label for="example-text-input" class="form-control-label">Upload Proposal (PDF only)</label>
-                                    <input type="file" name="ProposalDoc" class="form-control" id="formFile" accept="application/pdf" />
-                                    @Html.ValidationMessageFor(model => model.ProposalDoc, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    <div class="column1">@Html.LabelFor(model => model.ProposalDoc, "Upload Document", htmlAttributes: new { @class = "control-label" })</div>
+                                    <div>
+                                        @Html.TextBox("file", "", new { type = "file", @class = "form-control", required = "required" })
+                                    </div>
                                 </div>
 
                                 <hr />

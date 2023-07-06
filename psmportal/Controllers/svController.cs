@@ -15,7 +15,7 @@ namespace psmportal.Controllers
 {
     public class svController : Controller
     {
-        private db_psmportalEntities db = new db_psmportalEntities();
+        private db_psmportalEntities1 db = new db_psmportalEntities1();
 
         // GET: sv
         public ActionResult Index()

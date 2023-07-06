@@ -14,23 +14,8 @@ namespace psmportal.Models
     
     public partial class tb_evaluator
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public tb_evaluator()
-        {
-            this.tb_evaluation = new HashSet<tb_evaluation>();
-            this.tb_proposal = new HashSet<tb_proposal>();
-            this.tb_proposal1 = new HashSet<tb_proposal>();
-        }
-    
         public string EvaluatorIC { get; set; }
-        public string OwnedStudentIC { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_evaluation> tb_evaluation { get; set; }
         public virtual tb_lecturer tb_lecturer { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_proposal> tb_proposal { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_proposal> tb_proposal1 { get; set; }
     }
 }

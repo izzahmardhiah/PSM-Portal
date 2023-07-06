@@ -1,0 +1,64 @@
+﻿@model psmportal.Models.tb_evaluation
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>tb_evaluation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EvaluationComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EvaluationComment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EvaluationMarks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EvaluationMarks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_evaluator.EvaluatorIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_evaluator.EvaluatorIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_proposal.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_proposal.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_status.StatusName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_status.StatusName)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>

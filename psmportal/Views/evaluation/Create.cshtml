@@ -1,0 +1,100 @@
+﻿@model psmportal.Models.ViewModels.EvaluationProposalViewModel
+@using System.Web
+
+
+@{
+    ViewBag.Title = "Create";
+}
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        PSM Portal
+    </title>
+</head>
+
+<body class="g-sidenav-show   bg-gray-100">
+    <div class="min-height-300 bg-primary position-absolute w-100"></div>
+    @Html.Partial("_SideNavbar")
+    <main class="main-content position-relative border-radius-lg ">
+        @Html.Partial("_TopNavbar")
+
+        <div class="container-fluid py-4">
+            @using (Html.BeginForm("Create", "Evaluation", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="card">
+                            <div class="card-header pb-0">
+                                <div class="d-flex align-items-center">
+                                    <h3 class="mb-0">Proposal</h3>
+                                </div>
+                            </div>
+                            @Html.HiddenFor(model => model.Proposal)
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="card-body">
+                                <p class="text-uppercase text-sm">Lecturer Information</p>
+                                <div class="col-md-10">
+                                    <div class="form-group">
+                                        <label for="example-text-input" class="form-control-label">Proposal ID: </label>
+                                        @Html.DisplayFor(model => model.Proposal.ProposalID)
+                                    </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="form-group">
+                                            <label for="example-text-input" class="form-control-label">Title: </label>
+                                            @Html.DisplayFor(model => model.Proposal.Title)
+                                        </div>
+                                    </div>
+                                    <div class="col-md-10">
+                                        <label for="example-text-input" class="form-control-label">Date Uploaded:</label>
+                                        @Html.DisplayFor(model => model.Proposal.DateUploaded)
+                                    </div>
+
+                                    <embed src="@Url.Content("~/Uploads/" + Model.Proposal.ProposalDoc)" type="application/pdf" width="100%" height="600px" />
+
+                                <hr class="horizontal dark">
+                                <div class="col-md-10">
+                                    <label for="example-text-input" class="form-control-label">Comment</label>
+                                    @Html.TextAreaFor(model => model.Evaluation.EvaluationComment, new { @class = "form-control", rows = "4" })
+                                    @Html.ValidationMessageFor(model => model.Evaluation.EvaluationComment, "", new { @class = "" })
+                                </div>
+
+                                <div class="col-md-10">
+                                    <label for="example-text-input" class="form-control-label">Marks</label>
+                                    @Html.EditorFor(model => model.Evaluation.EvaluationMarks, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Evaluation.EvaluationMarks, "", new { @class = "text-danger" })
+                                </div>
+
+                                <div class="col-md-10">
+                                    <label for="example-text-input" class="form-control-label">Marks</label>
+                                    @Html.DropDownList("EvaluationStatus", null, "-- Select Status --", htmlAttributes: new { @class = "form-select" })
+                                    @Html.ValidationMessageFor(model => model.Evaluation.EvaluationStatus, "", new { @class = "text-danger" })
+                                </div>
+
+                                <hr />
+                                <div class="form-group">
+                                    <div class="col-md-offset-2 col-md-10">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @Html.Partial("_Footer")
+        </div>
+    </main>
+</body>
+
+</html>

@@ -12,14 +12,33 @@ namespace psmportal.Controllers
 {
     public class lecturerController : Controller
     {
-        private db_psmportalEntities db = new db_psmportalEntities();
+        private db_psmportalEntities1 db = new db_psmportalEntities1();
 
         // GET: lecturer
         public ActionResult Index()
         {
             var tb_lecturer = db.tb_lecturer.Include(t => t.tb_domain).Include(t => t.tb_program).Include(t => t.tb_sv);
+
+            // Get the list of domains for the dropdown
+            var domainList = db.tb_domain.ToList();
+            ViewBag.DomainList = new SelectList(domainList, "DomainID", "DomainName");
+
             return View(tb_lecturer.ToList());
         }
+
+
+        [HttpPost]
+        public ActionResult AssignDomain(string lecturerIC, int domainSelect)
+        {
+            var lecturer = db.tb_lecturer.Find(lecturerIC);
+            if (lecturer != null)
+            {
+                lecturer.Domain = domainSelect;
+                db.SaveChanges();
+            }
+            return RedirectToAction("Index");
+        }
+
 
         // GET: lecturer/Details/5
         public ActionResult Details(string id)

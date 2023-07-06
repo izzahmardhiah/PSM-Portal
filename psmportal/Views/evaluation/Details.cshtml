@@ -1,0 +1,58 @@
+﻿@model psmportal.Models.tb_evaluation
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>tb_evaluation</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.EvaluationComment)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EvaluationComment)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EvaluationMarks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.EvaluationMarks)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_evaluator.EvaluatorIC)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_evaluator.EvaluatorIC)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_proposal.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_proposal.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.tb_status.StatusName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.tb_status.StatusName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.EvaluationID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

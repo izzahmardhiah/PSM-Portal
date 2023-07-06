@@ -27,7 +27,7 @@
     <Key>
       <PropertyRef Name="EvaluationID" />
     </Key>
-    <Property Name="EvaluationID" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="EvaluationID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="EvaluatorIC" Type="varchar" MaxLength="50" />
     <Property Name="StudentIC" Type="varchar" MaxLength="50" />
     <Property Name="ProposalID" Type="varchar" MaxLength="50" />
@@ -38,10 +38,8 @@
   <EntityType Name="tb_evaluator">
     <Key>
       <PropertyRef Name="EvaluatorIC" />
-      <PropertyRef Name="OwnedStudentIC" />
     </Key>
     <Property Name="EvaluatorIC" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="OwnedStudentIC" Type="varchar" MaxLength="50" Nullable="false" />
   </EntityType>
   <EntityType Name="tb_lecturer">
     <Key>
@@ -67,7 +65,7 @@
     </Key>
     <Property Name="ProposalID" Type="varchar" MaxLength="50" Nullable="false" />
     <Property Name="Title" Type="varchar(max)" Nullable="false" />
-    <Property Name="ProposalDoc" Type="varbinary(max)" />
+    <Property Name="ProposalDoc" Type="varchar" MaxLength="200" />
     <Property Name="DateUploaded" Type="datetime" />
     <Property Name="Notes" Type="text" />
     <Property Name="Evaluator1" Type="varchar" MaxLength="50" />
@@ -136,19 +134,15 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="FK_tb_evaluation_tb_evaluator">
-    <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
+  <Association Name="FK_tb_evaluation_tb_proposal">
+    <End Role="tb_proposal" Type="Self.tb_proposal" Multiplicity="0..1" />
     <End Role="tb_evaluation" Type="Self.tb_evaluation" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="tb_evaluator">
-        <PropertyRef Name="EvaluatorIC" />
-        <PropertyRef Name="OwnedStudentIC" />
+      <Principal Role="tb_proposal">
+        <PropertyRef Name="ProposalID" />
       </Principal>
       <Dependent Role="tb_evaluation">
-        <PropertyRef Name="EvaluatorIC" />
-        <PropertyRef Name="StudentIC" />
+        <PropertyRef Name="ProposalID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -170,7 +164,7 @@
     <End Role="tb_lecturer" Type="Self.tb_lecturer" Multiplicity="1">
       <OnDelete Action="Cascade" />
     </End>
-    <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="*" />
+    <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="0..1" />
     <ReferentialConstraint>
       <Principal Role="tb_lecturer">
         <PropertyRef Name="IC" />
@@ -217,22 +211,6 @@
       </Principal>
       <Dependent Role="tb_lecturer">
         <PropertyRef Name="IC" />
-      </Dependent>
-    </ReferentialConstraint>
-  </Association>
-  <Association Name="FK_tb_proposal_tb_evaluator">
-    <End Role="tb_evaluator" Type="Self.tb_evaluator" Multiplicity="0..1">
-      <OnDelete Action="Cascade" />
-    </End>
-    <End Role="tb_proposal" Type="Self.tb_proposal" Multiplicity="*" />
-    <ReferentialConstraint>
-      <Principal Role="tb_evaluator">
-        <PropertyRef Name="EvaluatorIC" />
-        <PropertyRef Name="OwnedStudentIC" />
-      </Principal>
-      <Dependent Role="tb_proposal">
-        <PropertyRef Name="Evaluator1" />
-        <PropertyRef Name="StudentIC" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -356,8 +334,8 @@
       <End Role="tb_lecturer" EntitySet="tb_lecturer" />
       <End Role="tb_committee" EntitySet="tb_committee" />
     </AssociationSet>
-    <AssociationSet Name="FK_tb_evaluation_tb_evaluator" Association="Self.FK_tb_evaluation_tb_evaluator">
-      <End Role="tb_evaluator" EntitySet="tb_evaluator" />
+    <AssociationSet Name="FK_tb_evaluation_tb_proposal" Association="Self.FK_tb_evaluation_tb_proposal">
+      <End Role="tb_proposal" EntitySet="tb_proposal" />
       <End Role="tb_evaluation" EntitySet="tb_evaluation" />
     </AssociationSet>
     <AssociationSet Name="FK_tb_evaluation_tb_status" Association="Self.FK_tb_evaluation_tb_status">
@@ -379,10 +357,6 @@
     <AssociationSet Name="FK_tb_lecturer_tb_user" Association="Self.FK_tb_lecturer_tb_user">
       <End Role="tb_user" EntitySet="tb_user" />
       <End Role="tb_lecturer" EntitySet="tb_lecturer" />
-    </AssociationSet>
-    <AssociationSet Name="FK_tb_proposal_tb_evaluator" Association="Self.FK_tb_proposal_tb_evaluator">
-      <End Role="tb_evaluator" EntitySet="tb_evaluator" />
-      <End Role="tb_proposal" EntitySet="tb_proposal" />
     </AssociationSet>
     <AssociationSet Name="FK_tb_request_tb_lecturer" Association="Self.FK_tb_request_tb_lecturer">
       <End Role="tb_lecturer" EntitySet="tb_lecturer" />

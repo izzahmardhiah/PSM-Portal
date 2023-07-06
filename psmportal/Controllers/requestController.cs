@@ -13,7 +13,7 @@ namespace psmportal.Controllers
 {
     public class requestController : Controller
     {
-        private db_psmportalEntities db = new db_psmportalEntities();
+        private db_psmportalEntities1 db = new db_psmportalEntities1();
 
         // GET: request
         public ActionResult Index()

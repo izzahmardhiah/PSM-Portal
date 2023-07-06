@@ -45,58 +45,96 @@
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Mobile No.</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Academic Session</th>
                                             <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Programme</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Proposal</th>
                                             <th class="text-secondary opacity-7"></th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach (var item in Model)
+                                        @if (Session["Role"] != null && Session["Role"].ToString() == "2") // committee
                                         {
-                                            <tr>
-                                                <td>
-                                                    <div class="d-flex px-2 py-1">
-                                                        <div>
-                                                            <img src="~/Content/assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                                            foreach (var item in Model)
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="d-flex px-2 py-1">
+                                                            <div>
+                                                                <img src="~/Content/assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                                                            </div>
+                                                            <div class="d-flex flex-column justify-content-center">
+                                                                <h6 class="mb-0 text-sm">@Html.DisplayFor(modelItem => item.Name)</h6>
+                                                                <p class="text-xs text-secondary mb-0">@Html.DisplayFor(modelItem => item.Email)</p>
+                                                            </div>
                                                         </div>
-                                                        <div class="d-flex flex-column justify-content-center">
-                                                            <h6 class="mb-0 text-sm">@Html.DisplayFor(modelItem => item.Name)</h6>
-                                                            <p class="text-xs text-secondary mb-0">@Html.DisplayFor(modelItem => item.Email)</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.MatricNo)</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.MobileNo)</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.AcademicSession)</p>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span class="text-secondary text-xs font-weight-bold">@Html.DisplayFor(modelItem => item.ProgramCode)</span>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <a href="@Url.Action("Details", "proposal", new { id = item.IC })" class="btn btn-info btn-icon align-items-center btn-sm">
+                                                            <span class="btn-inner--icon"><i class="fa-solid fa-file-lines" style="color: #ffffff;"></i></span>
+                                                            <span class="btn-inner--text">Proposal</span>
+                                                        </a>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <a href="@Url.Action("Edit", "student", new { id = item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
+                                                            <i class="fa-sharp fa-solid fa-pencil fa-lg" style="color: #ffcb3d;"></i>
+                                                        </a>
+                                                        <a href="@Url.Action("Details", "student", new { id = item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Details user">
+                                                            <i class="fa-sharp fa-solid fa-eye fa-lg" style="color: #2d5eb4;"></i>
+                                                        </a>
+                                                        <a href="@Url.Action("Delete", "student", new { id = item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
+                                                            <i class="fa-sharp fa-solid fa-trash fa-lg" style="color: #ff5252;"></i>
+                                                        </a>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        }
+                                        @if (Session["Role"] != null && Session["Role"].ToString() == "4") // supervisor
+                                        {
+                                            foreach (var item in Model.Where(x => x.tb_sv.SupervisorIC == ViewBag.SupervisorIC.ToString()))
+                                            {
+                                                <tr>
+                                                    <td>
+                                                        <div class="d-flex px-2 py-1">
+                                                            <div>
+                                                                <img src="~/Content/assets/img/team-2.jpg" class="avatar avatar-sm me-3" alt="user1">
+                                                            </div>
+                                                            <div class="d-flex flex-column justify-content-center">
+                                                                <h6 class="mb-0 text-sm">@Html.DisplayFor(modelItem => item.Name)</h6>
+                                                                <p class="text-xs text-secondary mb-0">@Html.DisplayFor(modelItem => item.Email)</p>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.MatricNo)</p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.MobileNo)</p>
-                                                </td>
-                                                <td>
-                                                    <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.AcademicSession)</p>
-                                                </td>
-                                                <td class="align-middle text-center">
-                                                    <span class="text-secondary text-xs font-weight-bold">@Html.DisplayFor(modelItem => item.ProgramCode)</span>
-                                                </td>
-                                                @*<td class="align-middle">
-                                                    <a href="@Url.Action("Edit", "student" , new { id=item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Edit user">
-                                                        <i class="fa-sharp fa-solid fa-pencil fa-lg" style="color: #ffcb3d;"></i>
-                                                    </a>
-                                                    <a href="@Url.Action("Details", "student" , new { id=item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Details user">
-                                                        <i class="fa-sharp fa-solid fa-eye fa-lg" style="color: #2d5eb4;"></i>
-                                                    </a>
-                                                    <a href="@Url.Action("Delete", "student" , new { id=item.IC })" class="text-secondary font-weight-bold text-xs" data-toggle="tooltip" data-original-title="Delete user">
-                                                        <i class="fa-sharp fa-solid fa-trash fa-lg" style="color: #ff5252;"></i>
-                                                    </a>
-                                                </td>*@
-                                            <td>
-                                                <a href="@Url.Action("Details", "proposal")" class="btn btn-info btn-icon align-items-center btn-sm">
-                                                    <span class="btn-inner--icon"><i class="fa-solid fa-file-lines" style="color: #ffffff;"></i></span>
-                                                    <span class="btn-inner--text">Proposal 1</span>
-                                                </a>
-                                                <a href="@Url.Action("Details", "proposal")" class="btn btn-info btn-icon align-items-center btn-sm">
-                                                    <span class="btn-inner--icon"><i class="fa-solid fa-file-lines" style="color: #ffffff;"></i></span>
-                                                    <span class="btn-inner--text">Proposal 2</span>
-                                                </a>
-                                            </td>
-                                            </tr>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.MatricNo)</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.MobileNo)</p>
+                                                    </td>
+                                                    <td>
+                                                        <p class="text-xs font-weight-bold mb-0">@Html.DisplayFor(modelItem => item.AcademicSession)</p>
+                                                    </td>
+                                                    <td class="align-middle text-center">
+                                                        <span class="text-secondary text-xs font-weight-bold">@Html.DisplayFor(modelItem => item.ProgramCode)</span>
+                                                    </td>
+                                                    <td class="align-middle">
+                                                        <a href="@Url.Action("Details", "proposal", new { id = item.ProposalID })" class="btn btn-info btn-icon align-items-center btn-sm">
+                                                            <span class="btn-inner--icon"><i class="fa-solid fa-file-lines" style="color: #ffffff;"></i></span>
+                                                            <span class="btn-inner--text">Proposal</span>
+                                                        </a>
+                                                    </td>
+                                                    <td></td>
+                                                </tr>
+                                            }
                                         }
                                     </tbody>
                                 </table>

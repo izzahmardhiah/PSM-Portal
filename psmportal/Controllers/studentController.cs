@@ -12,14 +12,35 @@ namespace psmportal.Controllers
 {
     public class studentController : Controller
     {
-        private db_psmportalEntities db = new db_psmportalEntities();
+        private db_psmportalEntities1 db = new db_psmportalEntities1();
 
         // GET: student
         public ActionResult Index()
         {
-            var tb_student = db.tb_student.Include(t => t.tb_domain).Include(t => t.tb_program).Include(t => t.tb_proposal).Include(t => t.tb_sv);
-            return View(tb_student.ToList());
+            if (Session["Role"] != null && Session["Role"].ToString() == "4") // supervisor
+            {
+                // Get the supervisor IC from the session
+                string supervisorIC = Session["IC"].ToString();
+
+                // Store the supervisor IC in ViewBag
+                ViewBag.SupervisorIC = supervisorIC;
+
+                // Retrieve the student list owned by the supervisor
+                var tb_student = db.tb_student
+                    .Where(s => s.tb_sv.SupervisorIC == supervisorIC)
+                    .Include(t => t.tb_domain)
+                    .Include(t => t.tb_program)
+                    .Include(t => t.tb_proposal)
+                    .Include(t => t.tb_sv)
+                    .ToList();
+
+                return View(tb_student);
+            }
+
+            // For other roles, return an empty student list
+            return View(new List<tb_student>());
         }
+
 
         // GET: student/Details/5
         public ActionResult Details(string id)

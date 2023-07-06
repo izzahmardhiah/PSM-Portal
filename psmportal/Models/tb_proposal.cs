@@ -17,13 +17,13 @@ namespace psmportal.Models
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public tb_proposal()
         {
-            this.tb_evaluation = new HashSet<tb_evaluation>();
             this.tb_student = new HashSet<tb_student>();
+            this.tb_evaluation = new HashSet<tb_evaluation>();
         }
     
         public string ProposalID { get; set; }
         public string Title { get; set; }
-        public byte[] ProposalDoc { get; set; }
+        public string ProposalDoc { get; set; }
         public Nullable<System.DateTime> DateUploaded { get; set; }
         public string Notes { get; set; }
         public string Evaluator1 { get; set; }
@@ -31,10 +31,8 @@ namespace psmportal.Models
         public string StudentIC { get; set; }
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<tb_evaluation> tb_evaluation { get; set; }
-        public virtual tb_evaluator tb_evaluator { get; set; }
-        public virtual tb_evaluator tb_evaluator1 { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_student> tb_student { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<tb_evaluation> tb_evaluation { get; set; }
     }
 }

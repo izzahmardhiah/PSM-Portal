@@ -4,63 +4,88 @@
     ViewBag.Title = "Details";
 }
 
-<h2>Details</h2>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
 
-<div>
-    <h4>tb_proposal</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
+<!DOCTYPE html>
+<html lang="en">
 
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        PSM Portal
+    </title>
+</head>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.ProposalDoc)
-        </dt>
+<body class="g-sidenav-show   bg-gray-100">
+    <div class="min-height-300 bg-primary position-absolute w-100"></div>
+    @Html.Partial("_SideNavbar")
+    <main class="main-content position-relative border-radius-lg ">
+        @Html.Partial("_TopNavbar")
 
-        <dd>
-            @Html.DisplayFor(model => model.ProposalDoc)
-        </dd>
+        <div class="container-fluid py-4">
+            @using (Html.BeginForm())
+            {
+                @Html.AntiForgeryToken()
+                <div class="row">
+                    <div class="col-md-10">
+                        <div class="card">
+                            <div class="card-header pb-0">
+                                <div class="d-flex align-items-center">
+                                    <h3 class="mb-0">Proposal</h3>
+                                </div>
+                            </div>
 
-        <dt>
-            @Html.DisplayNameFor(model => model.DateUploaded)
-        </dt>
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                        <div class="card-body">
+                            <p class="text-uppercase text-sm">Lecturer Information</p>
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Proposal ID: </label>
+                                    @Html.DisplayFor(model => model.ProposalID)
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <div class="form-group">
+                                    <label for="example-text-input" class="form-control-label">Title: </label>
+                                    @Html.DisplayFor(model => model.Title)
+                                </div>
+                            </div>
+                            <div class="col-md-10">
+                                <label for="example-text-input" class="form-control-label">Date Uploaded:</label>
+                                @Html.DisplayFor(model => model.DateUploaded)
+                            </div>
 
-        <dd>
-            @Html.DisplayFor(model => model.DateUploaded)
-        </dd>
+                            <embed src="@Url.Content("~/Uploads/" + Model.ProposalDoc)" type="application/pdf" width="100%" height="600px" />
 
-        <dt>
-            @Html.DisplayNameFor(model => model.Notes)
-        </dt>
+                            <hr class="horizontal dark">
+                            <p class="text-uppercase text-sm">Feedbacks</p>
+                            <div class="col-md-10">
+                                <label for="example-text-input" class="form-control-label">Supervisor Comment:</label>
+                                @Html.DisplayFor(model => model.Notes)
+                            </div>
+                            <div class="col-md-10">
+                                <label for="example-text-input" class="form-control-label">Evaluator Comment:</label>
+                                @Html.DisplayFor(model => model.tb_evaluation)
+                            </div>
+                            <div class="col-md-10">
+                                <label for="example-text-input" class="form-control-label">Marks:</label>
+                                @Html.DisplayFor(model => model.Notes)
+                            </div>
+                            <div class="col-md-10">
+                                <label for="example-text-input" class="form-control-label">Status:</label>
+                                @Html.DisplayFor(model => model.Notes)
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            }
+            @Html.Partial("_Footer")
+        </div>
+    </main>
+</body>
 
-        <dd>
-            @Html.DisplayFor(model => model.Notes)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.tb_evaluator.EvaluatorIC)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.tb_evaluator.EvaluatorIC)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.tb_evaluator1.EvaluatorIC)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.tb_evaluator1.EvaluatorIC)
-        </dd>
-
-    </dl>
-</div>
-<p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.ProposalID }) |
-    @Html.ActionLink("Back to List", "Index")
-</p>
+</html>

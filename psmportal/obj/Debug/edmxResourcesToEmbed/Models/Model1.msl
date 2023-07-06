@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="db_psmportalModelStoreContainer" CdmEntityContainer="db_psmportalEntities">
+  <EntityContainerMapping StorageEntityContainer="db_psmportalModelStoreContainer" CdmEntityContainer="db_psmportalEntities1">
     <EntitySetMapping Name="sysdiagrams">
       <EntityTypeMapping TypeName="db_psmportalModel.sysdiagram">
         <MappingFragment StoreEntitySet="sysdiagrams">
@@ -9,6 +9,13 @@
           <ScalarProperty Name="diagram_id" ColumnName="diagram_id" />
           <ScalarProperty Name="version" ColumnName="version" />
           <ScalarProperty Name="definition" ColumnName="definition" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_committee">
+      <EntityTypeMapping TypeName="db_psmportalModel.tb_committee">
+        <MappingFragment StoreEntitySet="tb_committee">
+          <ScalarProperty Name="IC" ColumnName="IC" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -30,14 +37,6 @@
           <ScalarProperty Name="EvaluationComment" ColumnName="EvaluationComment" />
           <ScalarProperty Name="EvaluationMarks" ColumnName="EvaluationMarks" />
           <ScalarProperty Name="EvaluationStatus" ColumnName="EvaluationStatus" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tb_evaluator">
-      <EntityTypeMapping TypeName="db_psmportalModel.tb_evaluator">
-        <MappingFragment StoreEntitySet="tb_evaluator">
-          <ScalarProperty Name="EvaluatorIC" ColumnName="EvaluatorIC" />
-          <ScalarProperty Name="OwnedStudentIC" ColumnName="OwnedStudentIC" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -72,6 +71,17 @@
           <ScalarProperty Name="Evaluator1" ColumnName="Evaluator1" />
           <ScalarProperty Name="Evaluator2" ColumnName="Evaluator2" />
           <ScalarProperty Name="StudentIC" ColumnName="StudentIC" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="tb_request">
+      <EntityTypeMapping TypeName="db_psmportalModel.tb_request">
+        <MappingFragment StoreEntitySet="tb_request">
+          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+          <ScalarProperty Name="StudentIC" ColumnName="StudentIC" />
+          <ScalarProperty Name="SupervisorIC" ColumnName="SupervisorIC" />
+          <ScalarProperty Name="Notes" ColumnName="Notes" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -111,27 +121,16 @@
     <EntitySetMapping Name="tb_user">
       <EntityTypeMapping TypeName="db_psmportalModel.tb_user">
         <MappingFragment StoreEntitySet="tb_user">
-          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="IC" ColumnName="IC" />
           <ScalarProperty Name="Password" ColumnName="Password" />
-          <ScalarProperty Name="IC" ColumnName="IC" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="tb_committee">
-      <EntityTypeMapping TypeName="db_psmportalModel.tb_committee">
-        <MappingFragment StoreEntitySet="tb_committee">
-          <ScalarProperty Name="IC" ColumnName="IC" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="tb_request">
-      <EntityTypeMapping TypeName="db_psmportalModel.tb_request">
-        <MappingFragment StoreEntitySet="tb_request">
-          <ScalarProperty Name="Status" ColumnName="Status" />
-          <ScalarProperty Name="Notes" ColumnName="Notes" />
-          <ScalarProperty Name="SupervisorIC" ColumnName="SupervisorIC" />
-          <ScalarProperty Name="StudentIC" ColumnName="StudentIC" />
-          <ScalarProperty Name="RequestID" ColumnName="RequestID" />
+    <EntitySetMapping Name="tb_evaluator">
+      <EntityTypeMapping TypeName="db_psmportalModel.tb_evaluator">
+        <MappingFragment StoreEntitySet="tb_evaluator">
+          <ScalarProperty Name="EvaluatorIC" ColumnName="EvaluatorIC" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -35,9 +35,9 @@ namespace psmportal.Models
         public virtual tb_domain tb_domain { get; set; }
         public virtual tb_program tb_program { get; set; }
         public virtual tb_proposal tb_proposal { get; set; }
-        public virtual tb_sv tb_sv { get; set; }
-        public virtual tb_user tb_user { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<tb_request> tb_request { get; set; }
+        public virtual tb_sv tb_sv { get; set; }
+        public virtual tb_user tb_user { get; set; }
     }
 }

@@ -9,7 +9,7 @@ namespace psmportal.Controllers
 {
     public class LoginController : Controller
     {
-       db_psmportalEntities db = new db_psmportalEntities();
+        db_psmportalEntities1 db = new db_psmportalEntities1();
         // GET: Login
         public ActionResult Index()
         {
@@ -23,7 +23,7 @@ namespace psmportal.Controllers
         {
             if (ModelState.IsValid)
             {
-                using (db_psmportalEntities db = new db_psmportalEntities())
+                using (db_psmportalEntities1 db = new db_psmportalEntities1())
                 {
                     var user = db.tb_user.FirstOrDefault(a => a.IC.Equals(objchk.IC) && a.Password.Equals(objchk.Password));
                     if (user != null)
