@@ -2,14 +2,19 @@
 using System.Collections.Generic;
 using System.Data;
 using System.Data.Entity;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using psmportal.Models;
 
+
+
 namespace psmportal.Controllers
 {
+
     public class studentController : Controller
     {
         private db_psmportalEntities1 db = new db_psmportalEntities1();
@@ -76,24 +81,41 @@ namespace psmportal.Controllers
         {
             if (ModelState.IsValid)
             {
-                // Create a new instance of tb_user and assign values
-                tb_user user = new tb_user();
-                user.IC = tb_student.IC;
-                user.Password = tb_student.MobileNo;
-                user.Role = 3;
+                try
+                {
+                    // Create a new instance of tb_user and assign values
+                    tb_user user = new tb_user();
+                    user.IC = tb_student.IC;
+                    user.Password = Crypto.HashPassword(tb_student.MobileNo); // Hash the password
+                    user.Role = 3;
 
-                // Add the user to the context and save changes
-                db.tb_user.Add(user);
-                db.SaveChanges();
+                    // Add the user to the context
+                    db.tb_user.Add(user);
 
-                // Assign the user's IC to the tb_student object
-                tb_student.IC = user.IC;
+                    // Assign the user's IC to the tb_student object
+                    tb_student.IC = user.IC;
 
-                // Add the student to tb_student and save changes
-                db.tb_student.Add(tb_student);
-                db.SaveChanges();
+                    // Add the student to tb_student
+                    db.tb_student.Add(tb_student);
 
-                return RedirectToAction("Index", "Login");
+                    // Save changes to the database
+                    db.SaveChanges();
+
+                    return RedirectToAction("Index", "Login");
+                }
+                catch (DbEntityValidationException ex)
+                {
+                    // Handle validation errors
+                    var errorMessages = ex.EntityValidationErrors
+                        .SelectMany(x => x.ValidationErrors)
+                        .Select(x => x.ErrorMessage);
+
+                    // Log or handle the error messages as needed
+                    foreach (var errorMessage in errorMessages)
+                    {
+                        ModelState.AddModelError("", errorMessage);
+                    }
+                }
             }
 
             ViewBag.Domain = new SelectList(db.tb_domain, "DomainID", "DomainName", tb_student.Domain);
@@ -102,6 +124,8 @@ namespace psmportal.Controllers
             ViewBag.Supervisor = new SelectList(db.tb_sv, "SupervisorIC", "OwnedStudentIC", tb_student.Supervisor);
             return View(tb_student);
         }
+
+
 
 
         // GET: student/Edit/5

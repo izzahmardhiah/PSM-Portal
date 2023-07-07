@@ -117,7 +117,7 @@
       <PropertyRef Name="IC" />
     </Key>
     <Property Name="IC" Type="varchar" MaxLength="50" Nullable="false" />
-    <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Password" Type="varchar(max)" Nullable="false" />
     <Property Name="Role" Type="int" Nullable="false" />
   </EntityType>
   <Association Name="FK_tb_committee_tb_lecturer">

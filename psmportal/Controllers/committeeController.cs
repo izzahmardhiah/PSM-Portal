@@ -10,11 +10,13 @@ using psmportal.Models;
 
 namespace psmportal.Controllers
 {
+
     public class committeeController : Controller
     {
         private db_psmportalEntities1 db = new db_psmportalEntities1();
 
         // GET: committee
+        
         public ActionResult Index()
         {
             var tb_committee = db.tb_committee.Include(t => t.tb_lecturer).Include(t => t.tb_lecturer);

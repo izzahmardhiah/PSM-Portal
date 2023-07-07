@@ -14,6 +14,7 @@ using static System.Net.WebRequestMethods;
 
 namespace psmportal.Controllers
 {
+
     public class proposalController : Controller
     {
         private db_psmportalEntities1 db = new db_psmportalEntities1();
@@ -141,13 +142,27 @@ namespace psmportal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
+            // Retrieve the tb_proposal record based on the ProposalID
             tb_proposal tb_proposal = db.tb_proposal.Find(id);
             if (tb_proposal == null)
             {
                 return HttpNotFound();
             }
-            return View(tb_proposal);
+
+            // Retrieve the tb_evaluation record associated with the ProposalID
+            tb_evaluation tb_evaluation = db.tb_evaluation.FirstOrDefault(e => e.ProposalID == id);
+
+            // Create an instance of the EvaluationProposalViewModel
+            EvaluationProposalViewModel viewModel = new EvaluationProposalViewModel
+            {
+                Proposal = tb_proposal,
+                Evaluation = tb_evaluation
+            };
+
+            return View(viewModel);
         }
+
 
 
         // GET: proposal/Create

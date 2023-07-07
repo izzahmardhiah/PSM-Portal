@@ -73,7 +73,7 @@
 
                                     <div class="col-md-6">
                                         <label for="example-text-input" class="form-control-label">Programme</label>
-                                        @Html.DropDownList("ProgramCode", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.DropDownList("ProgramCode", null, "-- Select Program --", htmlAttributes: new { @class = "form-select" })
                                         @Html.ValidationMessageFor(model => model.ProgramCode, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -87,7 +87,7 @@
 
                                     <div class="col-md-6">
                                         <label for="example-text-input" class="form-control-label">Domain</label>
-                                        @Html.DropDownList("Domain", null, htmlAttributes: new { @class = "form-control" })
+                                        @Html.DropDownList("Domain", null, "-- Select Domain --", htmlAttributes: new { @class = "form-select" })
                                         @Html.ValidationMessageFor(model => model.Domain, "", new { @class = "text-danger" })
                                     </div>
 
@@ -120,7 +120,7 @@
                         &copy;
                         <script>
                             document.write(new Date().getFullYear())
-                        </script> Soft by Creative Tim.
+                        </script> Universiti Teknologi Malaysia
                     </p>
                 </div>
             </div>

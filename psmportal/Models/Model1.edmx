@@ -122,7 +122,7 @@
             <PropertyRef Name="IC" />
           </Key>
           <Property Name="IC" Type="varchar" MaxLength="50" Nullable="false" />
-          <Property Name="Password" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="Password" Type="varchar(max)" Nullable="false" />
           <Property Name="Role" Type="int" Nullable="false" />
         </EntityType>
         <Association Name="FK_tb_committee_tb_lecturer">
@@ -538,7 +538,7 @@
             <PropertyRef Name="IC" />
           </Key>
           <Property Name="IC" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
-          <Property Name="Password" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="Role" Type="Int32" Nullable="false" />
           <NavigationProperty Name="tb_lecturer" Relationship="Self.FK_tb_lecturer_tb_user" FromRole="tb_user" ToRole="tb_lecturer" />
           <NavigationProperty Name="tb_student" Relationship="Self.FK_tb_student_tb_user" FromRole="tb_user" ToRole="tb_student" />

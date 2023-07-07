@@ -5,11 +5,13 @@ using System.Data.Entity;
 using System.Linq;
 using System.Net;
 using System.Web;
+using System.Web.Helpers;
 using System.Web.Mvc;
 using psmportal.Models;
 
 namespace psmportal.Controllers
 {
+
     public class lecturerController : Controller
     {
         private db_psmportalEntities1 db = new db_psmportalEntities1();
@@ -77,7 +79,7 @@ namespace psmportal.Controllers
                 var user = new tb_user
                 {
                     IC = tb_lecturer.IC,
-                    Password = MobileNo,
+                    Password = Crypto.HashPassword(MobileNo), // Hash the password
                     Role = isCommittee ? 2 : 4 // Set role based on the value of isCommittee
                 };
                 db.tb_user.Add(user);
@@ -116,6 +118,7 @@ namespace psmportal.Controllers
             ViewBag.IC = new SelectList(db.tb_sv, "SupervisorIC", "OwnedStudentIC", tb_lecturer.IC);
             return View(tb_lecturer);
         }
+
 
 
 
